@@ -1,0 +1,647 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | DataPulse{% endblock %}
+{% block body_class %}app-body dashboard-body{% endblock %}
+{% block page_name %}Dashboard Overview{% endblock %}
+
+{% block content %}
+
+<section class="dashboard-page">
+
+    <!-- CHART DATA -->
+    <script type="application/json" id="dashboard-chart-data">
+        {{ charts|default({}, true)|tojson }}
+    </script>
+
+    <!-- DASHBOARD HEADER -->
+    <header class="dashboard-heading">
+
+        <div class="dashboard-heading-content">
+            <span class="eyebrow">WORKSPACE / OVERVIEW</span>
+            <h1>Dashboard <span>Overview</span></h1>
+            <p>Monitor performance, explore visual analytics and turn your data into decisions.</p>
+        </div>
+
+        <div class="dashboard-heading-right">
+
+            <div class="dashboard-profile">
+                MP
+            </div>
+
+            <div class="dashboard-live-status">
+                <span class="live-indicator"></span>
+                <span>Live Analytics</span>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- FLASH MESSAGES -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="dashboard-messages">
+                {% for category, message in messages %}
+                    <div class="dashboard-alert {{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+
+    {% if stats %}
+
+    <!-- DATASET INFORMATION + UPLOAD -->
+    <section class="dashboard-dataset-bar">
+
+        <div class="dashboard-dataset-info">
+
+            <div class="dataset-symbol">
+                <i class="fa-solid fa-file-csv"></i>
+            </div>
+
+            <div class="dataset-information">
+                <span class="mini-label">ACTIVE DATASET</span>
+                <h3>{{ filename or 'Current Dataset' }}</h3>
+            </div>
+
+        </div>
+
+        <div class="dashboard-dataset-details">
+
+            <div class="dataset-detail">
+                <strong>{{ stats.get('rows', 0) }}</strong>
+                <span>Rows</span>
+            </div>
+
+            <div class="dataset-detail">
+                <strong>{{ stats.get('columns', 0) }}</strong>
+                <span>Columns</span>
+            </div>
+
+            <div class="dataset-detail">
+                <strong>{{ stats.get('quality', 0) }}%</strong>
+                <span>Quality</span>
+            </div>
+
+        </div>
+
+        <form
+            class="dashboard-upload-form"
+            action="{{ url_for('upload') }}"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <label for="dashboard-file" class="choose-file-btn">
+                <i class="fa-solid fa-folder-open"></i>
+                Choose File
+            </label>
+
+            <input
+                type="file"
+                id="dashboard-file"
+                name="dataset"
+                accept=".csv,.xlsx,.xls"
+                required
+            >
+
+            <span id="dashboard-file-name">No file selected</span>
+
+            <button type="submit" class="upload-submit-btn">
+                Upload Dataset
+                <i class="fa-solid fa-arrow-up"></i>
+            </button>
+
+        </form>
+
+    </section>
+
+
+    <!-- ==================================
+         VISUAL INTELLIGENCE
+    =================================== -->
+
+    <section class="dashboard-visualization-section">
+
+        <div class="dashboard-section-heading charts-heading">
+
+            <div>
+                <span class="section-eyebrow">VISUAL INTELLIGENCE</span>
+                <h2>Visual Analytics</h2>
+                <p>Explore patterns and discover insights from your dataset.</p>
+            </div>
+
+            <span class="section-note">
+                <i class="fa-solid fa-chart-line"></i>
+                08 VISUALIZATIONS
+            </span>
+
+        </div>
+
+
+        <!-- EXACTLY 4 CHARTS PER ROW -->
+        <div class="dashboard-chart-grid">
+
+
+            <!-- CHART 01 -->
+            <article class="dashboard-chart-card">
+
+                <div class="chart-card-heading">
+                    <div>
+                        <span class="chart-number">01 / TREND</span>
+                        <h3>Revenue Trend</h3>
+                        <p>Revenue performance over time</p>
+                    </div>
+
+                    <span class="chart-menu">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </span>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="revenueTrendChart"></canvas>
+                </div>
+
+            </article>
+
+
+            <!-- CHART 02 -->
+            <article class="dashboard-chart-card">
+
+                <div class="chart-card-heading">
+                    <div>
+                        <span class="chart-number">02 / PRODUCT</span>
+                        <h3>Product Performance</h3>
+                        <p>Product-wise revenue comparison</p>
+                    </div>
+
+                    <span class="chart-menu">
+                        <i class="fa-solid fa-ranking-star"></i>
+                    </span>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="productChart"></canvas>
+                </div>
+
+            </article>
+
+
+            <!-- CHART 03 -->
+            <article class="dashboard-chart-card">
+
+                <div class="chart-card-heading">
+                    <div>
+                        <span class="chart-number">03 / REGION</span>
+                        <h3>Revenue by Region</h3>
+                        <p>Regional revenue contribution</p>
+                    </div>
+
+                    <span class="chart-menu">
+                        <i class="fa-solid fa-earth-asia"></i>
+                    </span>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="regionChart"></canvas>
+                </div>
+
+            </article>
+
+
+            <!-- CHART 04 -->
+            <article class="dashboard-chart-card">
+
+                <div class="chart-card-heading">
+                    <div>
+                        <span class="chart-number">04 / CATEGORY</span>
+                        <h3>Category Distribution</h3>
+                        <p>Category-wise distribution</p>
+                    </div>
+
+                    <span class="chart-menu">
+                        <i class="fa-solid fa-chart-pie"></i>
+                    </span>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+
+            </article>
+
+
+            <!-- CHART 05 -->
+            <article class="dashboard-chart-card">
+
+                <div class="chart-card-heading">
+                    <div>
+                        <span class="chart-number">05 / DISTRIBUTION</span>
+                        <h3>Value Distribution</h3>
+                        <p>Distribution of numerical values</p>
+                    </div>
+
+                    <span class="chart-menu">
+                        <i class="fa-solid fa-chart-column"></i>
+                    </span>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="distributionChart"></canvas>
+                </div>
+
+            </article>
+
+
+            <!-- CHART 06 -->
+            <article class="dashboard-chart-card">
+
+                <div class="chart-card-heading">
+                    <div>
+                        <span class="chart-number">06 / RELATIONSHIP</span>
+                        <h3>Revenue &amp; Profit</h3>
+                        <p>Relationship between revenue and profit</p>
+                    </div>
+
+                    <span class="chart-menu">
+                        <i class="fa-solid fa-braille"></i>
+                    </span>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="scatterChart"></canvas>
+                </div>
+
+            </article>
+
+
+            <!-- CHART 07 -->
+            <article class="dashboard-chart-card">
+
+                <div class="chart-card-heading">
+                    <div>
+                        <span class="chart-number">07 / PROFIT</span>
+                        <h3>Profit Trend</h3>
+                        <p>Profit performance over time</p>
+                    </div>
+
+                    <span class="chart-menu">
+                        <i class="fa-solid fa-arrow-trend-up"></i>
+                    </span>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="profitTrendChart"></canvas>
+                </div>
+
+            </article>
+
+
+            <!-- CHART 08 -->
+            <article class="dashboard-chart-card">
+
+                <div class="chart-card-heading">
+                    <div>
+                        <span class="chart-number">08 / ORDERS</span>
+                        <h3>Orders Trend</h3>
+                        <p>Order activity across records</p>
+                    </div>
+
+                    <span class="chart-menu">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                    </span>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="ordersTrendChart"></canvas>
+                </div>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================
+         PERFORMANCE SUMMARY
+    =================================== -->
+
+    <section class="dashboard-metrics-section">
+
+        <div class="dashboard-section-heading">
+
+            <div>
+                <span class="section-eyebrow">PERFORMANCE OVERVIEW</span>
+                <h2>Data at a Glance</h2>
+            </div>
+
+            <span class="section-note">ACTIVE DATASET METRICS</span>
+
+        </div>
+
+
+        <div class="dashboard-kpi-grid">
+
+
+            <!-- TOTAL REVENUE -->
+            <article class="kpi-card revenue-card">
+
+                <div class="kpi-top">
+                    <span class="kpi-label">TOTAL REVENUE</span>
+                    <span class="kpi-icon">
+                        <i class="fa-solid fa-indian-rupee-sign"></i>
+                    </span>
+                </div>
+
+                <h2>{{ "{:,.2f}".format(stats.get('revenue', 0) or 0) }}</h2>
+
+                <p>Overall revenue generated</p>
+
+                <div class="kpi-bottom">
+                    <span>Revenue Performance</span>
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+
+            </article>
+
+
+            <!-- TOTAL PROFIT -->
+            <article class="kpi-card profit-card">
+
+                <div class="kpi-top">
+                    <span class="kpi-label">TOTAL PROFIT</span>
+                    <span class="kpi-icon">
+                        <i class="fa-solid fa-wallet"></i>
+                    </span>
+                </div>
+
+                <h2>{{ "{:,.2f}".format(stats.get('profit', 0) or 0) }}</h2>
+
+                <p>Total profit generated</p>
+
+                <div class="kpi-bottom">
+                    <span>Profit Performance</span>
+                    <i class="fa-solid fa-arrow-trend-up"></i>
+                </div>
+
+            </article>
+
+
+            <!-- UNITS SOLD -->
+            <article class="kpi-card units-card">
+
+                <div class="kpi-top">
+                    <span class="kpi-label">UNITS SOLD</span>
+                    <span class="kpi-icon">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                    </span>
+                </div>
+
+                <h2>{{ "{:,.0f}".format(stats.get('units', 0) or 0) }}</h2>
+
+                <p>Total quantity sold</p>
+
+                <div class="kpi-bottom">
+                    <span>Sales Volume</span>
+                    <i class="fa-solid fa-box"></i>
+                </div>
+
+            </article>
+
+
+            <!-- TOTAL RECORDS -->
+            <article class="kpi-card records-card">
+
+                <div class="kpi-top">
+                    <span class="kpi-label">TOTAL RECORDS</span>
+                    <span class="kpi-icon">
+                        <i class="fa-solid fa-database"></i>
+                    </span>
+                </div>
+
+                <h2>{{ "{:,.0f}".format(stats.get('rows', 0) or 0) }}</h2>
+
+                <p>Total dataset records</p>
+
+                <div class="kpi-bottom">
+                    <span>Dataset Volume</span>
+                    <i class="fa-solid fa-table-list"></i>
+                </div>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================
+         DATA HEALTH + DATA PREVIEW
+    =================================== -->
+
+    <section class="dashboard-bottom-grid">
+
+
+        <!-- DATA HEALTH: LEFT SIDE -->
+        <article class="dashboard-quality-card">
+
+            <div class="bottom-card-heading">
+
+                <div>
+                    <span class="section-eyebrow">DATA HEALTH</span>
+                    <h3>Dataset Quality</h3>
+                    <p>Monitor your dataset health</p>
+                </div>
+
+                <span class="quality-symbol">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </span>
+
+            </div>
+
+
+            <div class="quality-score">
+                <strong>{{ stats.get('quality', 0) }}%</strong>
+                <span>Overall quality score</span>
+            </div>
+
+
+            <div class="quality-progress">
+                <div style="width: {{ stats.get('quality', 0) }}%"></div>
+            </div>
+
+
+            <div class="quality-mini-grid">
+
+                <div class="quality-mini-card">
+                    <span class="quality-mini-icon">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </span>
+                    <strong>{{ stats.get('quality', 0) }}%</strong>
+                    <small>Quality</small>
+                </div>
+
+                <div class="quality-mini-card">
+                    <span class="quality-mini-icon">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                    </span>
+                    <strong>{{ stats.get('missing', 0) }}</strong>
+                    <small>Missing</small>
+                </div>
+
+                <div class="quality-mini-card">
+                    <span class="quality-mini-icon">
+                        <i class="fa-solid fa-clone"></i>
+                    </span>
+                    <strong>{{ stats.get('duplicates', 0) }}</strong>
+                    <small>Duplicates</small>
+                </div>
+
+                <div class="quality-mini-card">
+                    <span class="quality-mini-icon">
+                        <i class="fa-solid fa-table-columns"></i>
+                    </span>
+                    <strong>{{ stats.get('columns', 0) }}</strong>
+                    <small>Columns</small>
+                </div>
+
+            </div>
+
+
+            <a href="{{ url_for('cleaning') }}" class="quality-action">
+                Open Data Cleaning
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+
+        </article>
+
+
+        <!-- DATA PREVIEW: RIGHT SIDE -->
+        <article class="dashboard-preview-card">
+
+            <div class="bottom-card-heading">
+
+                <div>
+                    <span class="section-eyebrow">DATA PREVIEW</span>
+                    <h3>Recent Records</h3>
+                    <p>Explore the actual uploaded dataset</p>
+                </div>
+
+                <span class="preview-badge">
+                    <span class="live-indicator"></span>
+                    LIVE DATA
+                </span>
+
+            </div>
+
+
+            <div class="preview-table-wrapper">
+
+                <table class="dashboard-preview-table">
+
+                    <thead>
+                        <tr>
+                            {% for column in columns %}
+                                <th>{{ column }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for row in preview %}
+                            <tr>
+                                {% for column in columns %}
+                                    <td>{{ row.get(column, '') }}</td>
+                                {% endfor %}
+                            </tr>
+
+                        {% else %}
+                            <tr>
+                                <td
+                                    colspan="{{ columns|length if columns else 1 }}"
+                                    class="empty-preview"
+                                >
+                                    No preview data available.
+                                </td>
+                            </tr>
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </article>
+
+    </section>
+
+
+    {% else %}
+
+
+    <!-- ==================================
+         EMPTY DASHBOARD
+    =================================== -->
+
+    <section class="dashboard-empty-state">
+
+        <div class="empty-state-icon">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+        </div>
+
+        <span class="section-eyebrow">START YOUR ANALYSIS</span>
+
+        <h2>Your data story starts here.</h2>
+
+        <p>
+            Upload your CSV or Excel dataset and DataPulse will
+            transform your data into interactive charts,
+            performance metrics and intelligent insights.
+        </p>
+
+        <form
+            action="{{ url_for('upload') }}"
+            method="POST"
+            enctype="multipart/form-data"
+            id="empty-upload-form"
+        >
+
+            <label
+                for="dashboard-file-empty"
+                class="upload-submit-btn"
+            >
+                <i class="fa-solid fa-folder-open"></i>
+                Choose Dataset
+                <i class="fa-solid fa-arrow-up"></i>
+            </label>
+
+            <input
+                type="file"
+                id="dashboard-file-empty"
+                name="dataset"
+                accept=".csv,.xlsx,.xls"
+                required
+                hidden
+            >
+
+        </form>
+
+    </section>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}
+
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

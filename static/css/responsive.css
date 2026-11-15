@@ -1,0 +1,193 @@
+/* =====================================================
+   DATAPULSE — RESPONSIVE DESIGN
+   Desktop | Laptop | Tablet | Mobile
+===================================================== */
+
+
+/* =====================================================
+   01. DESKTOP & LAPTOP
+   4 Charts + 4 KPI Cards
+===================================================== */
+
+@media (min-width: 993px) {
+
+    .dashboard-chart-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .dashboard-kpi-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .dashboard-bottom-grid {
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.7fr);
+    }
+
+}
+
+
+/* =====================================================
+   02. TABLET
+===================================================== */
+
+@media (max-width: 992px) {
+
+    .dashboard-chart-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .dashboard-kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .dashboard-bottom-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-dataset-bar {
+        flex-wrap: wrap;
+    }
+
+    .dashboard-upload-form {
+        flex-wrap: wrap;
+    }
+
+    .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+/* =====================================================
+   03. MOBILE
+===================================================== */
+
+@media (max-width: 768px) {
+
+    .app-sidebar {
+        transform: translateX(-100%);
+        z-index: 1000;
+    }
+
+    .app-sidebar.open {
+        transform: translateX(0);
+    }
+
+    .app-main {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .app-topbar {
+        padding: 12px 16px;
+    }
+
+    .app-content {
+        padding: 18px 14px;
+    }
+
+    .dashboard-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .dashboard-heading-right {
+        align-self: flex-end;
+    }
+
+    .dashboard-dataset-bar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .dashboard-upload-form {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .dashboard-bottom-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+        min-height: auto;
+        padding: 90px 6%;
+    }
+
+    .hero h1 {
+        font-size: 48px;
+    }
+
+    .features {
+        padding: 70px 6%;
+    }
+
+}
+
+
+/* =====================================================
+   04. SMALL MOBILE
+===================================================== */
+
+@media (max-width: 480px) {
+
+    .app-content {
+        padding: 14px 10px;
+    }
+
+    .dashboard-page {
+        padding: 13px;
+    }
+
+    .dashboard-chart-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .quality-mini-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .dashboard-heading h1 {
+        font-size: 23px;
+    }
+
+    .dashboard-dataset-details {
+        width: 100%;
+        justify-content: space-around;
+    }
+
+    .dashboard-upload-form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .choose-file-btn,
+    .upload-submit-btn {
+        width: 100%;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+        font-size: 38px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+    }
+
+}
+
+
+/* =====================================================
+   END — RESPONSIVE DESIGN
+===================================================== */

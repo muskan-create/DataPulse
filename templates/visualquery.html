@@ -1,0 +1,428 @@
+{% extends "base.html" %}
+
+{% block title %}VisualQuery | DataPulse{% endblock %}
+{% block page_name %}VISUALQUERY{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/visualquery.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="vq-page">
+
+    <!-- HERO -->
+    <section class="vq-hero">
+
+        <div class="vq-hero-content">
+            <span class="vq-eyebrow">
+                DATAPULSE / INTELLIGENT DATA QUERY
+            </span>
+
+            <h1>Ask your data <span>anything.</span></h1>
+
+            <p>
+                Explore your dataset through natural language.
+                Ask questions, discover insights and understand
+                your data without writing SQL.
+            </p>
+
+            <div class="vq-hero-status">
+                <span class="vq-status-dot"></span>
+                QUERY ENGINE ACTIVE
+            </div>
+        </div>
+
+        <div class="vq-hero-visual">
+            <div class="vq-orbit orbit-one"></div>
+            <div class="vq-orbit orbit-two"></div>
+            <div class="vq-orbit orbit-three"></div>
+
+            <div class="vq-core">
+                <i class="fa-solid fa-brain"></i>
+            </div>
+
+            <div class="vq-floating-icon icon-one">
+                <i class="fa-solid fa-chart-column"></i>
+            </div>
+
+            <div class="vq-floating-icon icon-two">
+                <i class="fa-solid fa-database"></i>
+            </div>
+
+            <div class="vq-floating-icon icon-three">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- QUERY WORKSPACE -->
+    <section class="vq-workspace">
+
+        <div class="vq-main-column">
+
+            <!-- QUERY INPUT -->
+            <div class="vq-query-card">
+
+                <div class="vq-card-heading">
+
+                    <div class="vq-heading-icon">
+                        <i class="fa-solid fa-terminal"></i>
+                    </div>
+
+                    <div>
+                        <h2>Query Workspace</h2>
+                        <p>Ask a question about your active dataset.</p>
+                    </div>
+
+                    <span class="vq-live-badge">
+                        <span></span> LIVE
+                    </span>
+
+                </div>
+
+
+                <form method="POST"
+                      action="{{ url_for('visualquery') }}"
+                      class="vq-form"
+                      id="vq-form">
+
+                    <label for="question">
+                        WHAT WOULD YOU LIKE TO KNOW?
+                    </label>
+
+                    <div class="vq-input-wrapper">
+
+                        <i class="fa-solid fa-magnifying-glass vq-input-icon"></i>
+
+                        <input
+                            type="text"
+                            id="question"
+                            name="question"
+                            placeholder="e.g. What is the total revenue?"
+                            autocomplete="off"
+                            required
+                            maxlength="250"
+                            value="{{ request.form.get('question', '') if request.method == 'POST' else '' }}"
+                        >
+
+                        <button type="submit" id="vq-submit">
+
+                            <span class="vq-button-text">
+                                Run Query
+                            </span>
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </button>
+
+                    </div>
+
+                    <div class="vq-input-footer">
+                        <span>
+                            <i class="fa-solid fa-circle-info"></i>
+                            Use simple English to ask questions
+                        </span>
+
+                        <span>ENTER ↵</span>
+                    </div>
+
+                </form>
+
+
+                <!-- RESULT -->
+                {% if result is not none %}
+
+                <div class="vq-result
+                    {% if result.type == 'error' %}vq-result-error{% endif %}">
+
+                    <div class="vq-result-top">
+
+                        <div class="vq-result-icon">
+                            {% if result.type == 'error' %}
+                                <i class="fa-solid fa-circle-exclamation"></i>
+                            {% else %}
+                                <i class="fa-solid fa-sparkles"></i>
+                            {% endif %}
+                        </div>
+
+                        <div>
+                            <span class="vq-result-label">
+                                QUERY RESPONSE
+                            </span>
+
+                            <h3>Analysis Complete</h3>
+                        </div>
+
+                        <span class="vq-result-status">
+                            {% if result.type == 'error' %}
+                                NEEDS INPUT
+                            {% else %}
+                                SUCCESS
+                            {% endif %}
+                        </span>
+
+                    </div>
+
+                    <div class="vq-answer-box">
+
+                        <span class="vq-answer-label">
+                            ANSWER
+                        </span>
+
+                        <div class="vq-answer">
+                            {{ result.answer }}
+                        </div>
+
+                        {% if result.details %}
+                        <p class="vq-answer-details">
+                            {{ result.details }}
+                        </p>
+                        {% endif %}
+
+                    </div>
+
+                    <div class="vq-result-bottom">
+
+                        <span>
+                            <i class="fa-solid fa-circle-check"></i>
+                            Processed using active dataset
+                        </span>
+
+                        <button type="button" id="vq-copy">
+                            <i class="fa-regular fa-copy"></i>
+                            Copy Answer
+                        </button>
+
+                    </div>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- SUGGESTED QUESTIONS -->
+            <div class="vq-suggestions-card">
+
+                <div class="vq-section-heading">
+
+                    <div>
+                        <span class="vq-section-eyebrow">
+                            QUICK START
+                        </span>
+
+                        <h2>Explore your data</h2>
+
+                        <p>Select a question to get started.</p>
+                    </div>
+
+                    <span class="vq-suggestion-count">
+                        06 QUESTIONS
+                    </span>
+
+                </div>
+
+
+                <div class="vq-suggestion-grid">
+
+                    <button type="button"
+                            class="vq-suggestion"
+                            data-question="What is the total revenue?">
+
+                        <div class="vq-suggestion-icon revenue">
+                            <i class="fa-solid fa-indian-rupee-sign"></i>
+                        </div>
+
+                        <div>
+                            <strong>Total Revenue</strong>
+                            <span>Calculate overall revenue</span>
+                        </div>
+
+                        <i class="fa-solid fa-arrow-up-right-from-square vq-suggestion-arrow"></i>
+
+                    </button>
+
+
+                    <button type="button"
+                            class="vq-suggestion"
+                            data-question="What is the average profit?">
+
+                        <div class="vq-suggestion-icon profit">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+
+                        <div>
+                            <strong>Average Profit</strong>
+                            <span>Find average profit</span>
+                        </div>
+
+                        <i class="fa-solid fa-arrow-up-right-from-square vq-suggestion-arrow"></i>
+
+                    </button>
+
+
+                    <button type="button"
+                            class="vq-suggestion"
+                            data-question="Which product has the highest sales?">
+
+                        <div class="vq-suggestion-icon product">
+                            <i class="fa-solid fa-trophy"></i>
+                        </div>
+
+                        <div>
+                            <strong>Top Product</strong>
+                            <span>Discover best-selling product</span>
+                        </div>
+
+                        <i class="fa-solid fa-arrow-up-right-from-square vq-suggestion-arrow"></i>
+
+                    </button>
+
+
+                    <button type="button"
+                            class="vq-suggestion"
+                            data-question="Which region performs best?">
+
+                        <div class="vq-suggestion-icon region">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+
+                        <div>
+                            <strong>Best Region</strong>
+                            <span>Identify leading region</span>
+                        </div>
+
+                        <i class="fa-solid fa-arrow-up-right-from-square vq-suggestion-arrow"></i>
+
+                    </button>
+
+
+                    <button type="button"
+                            class="vq-suggestion"
+                            data-question="How many units were sold?">
+
+                        <div class="vq-suggestion-icon quantity">
+                            <i class="fa-solid fa-boxes-stacked"></i>
+                        </div>
+
+                        <div>
+                            <strong>Total Units</strong>
+                            <span>Count quantity sold</span>
+                        </div>
+
+                        <i class="fa-solid fa-arrow-up-right-from-square vq-suggestion-arrow"></i>
+
+                    </button>
+
+
+                    <button type="button"
+                            class="vq-suggestion"
+                            data-question="Show me the top category">
+
+                        <div class="vq-suggestion-icon category">
+                            <i class="fa-solid fa-layer-group"></i>
+                        </div>
+
+                        <div>
+                            <strong>Top Category</strong>
+                            <span>Find highest performing category</span>
+                        </div>
+
+                        <i class="fa-solid fa-arrow-up-right-from-square vq-suggestion-arrow"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT SIDEBAR -->
+        <aside class="vq-side-column">
+
+            <div class="vq-info-card">
+
+                <div class="vq-info-heading">
+                    <i class="fa-solid fa-microchip"></i>
+                    <span>QUERY ENGINE</span>
+                </div>
+
+                <div class="vq-engine-status">
+                    <span class="vq-engine-dot"></span>
+                    Operational
+                </div>
+
+                <div class="vq-engine-description">
+                    DataPulse processes your questions
+                    and retrieves meaningful information
+                    from your active dataset.
+                </div>
+
+                <div class="vq-engine-divider"></div>
+
+                <div class="vq-engine-stat">
+                    <span>Processing</span>
+                    <strong>Natural Language</strong>
+                </div>
+
+                <div class="vq-engine-stat">
+                    <span>Data Source</span>
+                    <strong>Active Dataset</strong>
+                </div>
+
+                <div class="vq-engine-stat">
+                    <span>Response Mode</span>
+                    <strong>Instant Analysis</strong>
+                </div>
+
+            </div>
+
+
+            <div class="vq-help-card">
+
+                <div class="vq-help-icon">
+                    <i class="fa-solid fa-lightbulb"></i>
+                </div>
+
+                <h3>Need inspiration?</h3>
+
+                <p>
+                    Ask about revenue, profit, products,
+                    regions, categories or quantities.
+                </p>
+
+                <div class="vq-help-example">
+                    <i class="fa-solid fa-message"></i>
+                    "Which product has the highest sales?"
+                </div>
+
+            </div>
+
+
+            <div class="vq-security-note">
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+                <span>
+                    Your queries use the currently
+                    active dataset.
+                </span>
+
+            </div>
+
+        </aside>
+
+    </section>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/visualquery.js') }}"></script>
+
+{% endblock %}

@@ -1,0 +1,1801 @@
+
+/* =====================================================
+   DATAPULSE — GLOBAL APPLICATION PAGES
+   Theme: Dark Navy | Blue | Slate
+===================================================== */
+
+:root {
+    --dp-sidebar: #111C2E;
+    --dp-sidebar-light: #1B2940;
+    --dp-primary: #3B82F6;
+    --dp-primary-light: #1E3A5F;
+    --dp-bg: #101827;
+    --dp-white: #1B2940;
+    --dp-text: #F1F5F9;
+    --dp-muted: #94A3B8;
+    --dp-border: #2B3A50;
+    --dp-shadow: 0 8px 28px rgba(0, 0, 0, 0.15);
+    --dp-radius: 15px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body.app-body,
+body.dashboard-body {
+    margin: 0;
+    background: var(--dp-bg);
+    color: var(--dp-text);
+    font-family: "DM Sans", sans-serif;
+}
+
+.app-shell {
+    min-height: 100vh;
+    display: flex;
+}
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.app-sidebar {
+    width: 250px;
+    min-width: 250px;
+    min-height: 100vh;
+    background: var(--dp-sidebar);
+    color: var(--dp-text);
+    display: flex;
+    flex-direction: column;
+    padding: 27px 17px 20px;
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 10px;
+    margin-bottom: 43px;
+    color: white;
+    text-decoration: none;
+}
+
+.brand-symbol {
+    width: 39px;
+    height: 39px;
+    border-radius: 12px;
+    background: var(--dp-primary);
+    color: white;
+    display: grid;
+    place-items: center;
+    font-size: 23px;
+    font-weight: 800;
+}
+
+.brand-name {
+    font-family: "Manrope", sans-serif;
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: -0.7px;
+}
+
+.sidebar-label {
+    color: #64748B;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.7px;
+    padding: 0 12px;
+    margin-bottom: 13px;
+}
+
+.secondary-label {
+    margin-top: 29px;
+}
+
+.sidebar-navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.sidebar-link {
+    min-height: 45px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 0 13px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #A8B6C9;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+.sidebar-link i {
+    width: 18px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.sidebar-link:hover {
+    background: rgba(255, 255, 255, 0.07);
+    color: white;
+    transform: translateX(3px);
+}
+
+.sidebar-link.active {
+    color: white;
+    background: #1E3A5F;
+    box-shadow: inset 3px 0 var(--dp-primary);
+}
+
+.sidebar-new {
+    margin-left: auto;
+    background: var(--dp-primary);
+    color: white;
+    padding: 3px 7px;
+    border-radius: 5px;
+    font-size: 9px;
+    font-weight: 800;
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+}
+
+.sidebar-status {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 14px 11px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--dp-border);
+    border-radius: 12px;
+}
+
+.status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22C55E;
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.sidebar-status strong,
+.sidebar-status small {
+    display: block;
+}
+
+.sidebar-status strong {
+    font-size: 11px;
+}
+
+.sidebar-status small {
+    color: var(--dp-muted);
+    font-size: 10px;
+    margin-top: 3px;
+}
+
+.sidebar-home {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--dp-muted);
+    text-decoration: none;
+    padding: 18px 11px 4px;
+    font-size: 12px;
+}
+
+.sidebar-home:hover {
+    color: white;
+}
+
+/* =====================================================
+   MAIN AREA
+===================================================== */
+
+.app-main {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+    min-width: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.app-topbar {
+    height: 76px;
+    min-height: 76px;
+    background: #151F31;
+    border-bottom: 1px solid var(--dp-border);
+    padding: 0 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(14px);
+}
+
+.topbar-left,
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    font-size: 12px;
+    color: var(--dp-muted);
+}
+
+.breadcrumb i {
+    font-size: 9px;
+}
+
+.breadcrumb strong {
+    color: var(--dp-text);
+    font-size: 13px;
+}
+
+.live-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: #86B7FF;
+    font-weight: 700;
+    background: #1B3150;
+    padding: 9px 13px;
+    border-radius: 30px;
+}
+
+.topbar-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #26466F;
+    color: #BFDBFE;
+    display: grid;
+    place-items: center;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.sidebar-toggle {
+    display: none;
+    border: 0;
+    background: #26364D;
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    color: var(--dp-text);
+    cursor: pointer;
+}
+
+.app-content {
+    width: 100%;
+    max-width: 1700px;
+    margin: 0 auto;
+    padding: 34px 36px 45px;
+    flex: 1;
+    animation: pageEnter 0.45s ease both;
+}
+
+@keyframes pageEnter {
+    from {
+        opacity: 0;
+        transform: translateY(9px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.app-footer {
+    padding: 17px 36px;
+    border-top: 1px solid var(--dp-border);
+    display: flex;
+    justify-content: space-between;
+    color: var(--dp-muted);
+    font-size: 10px;
+}
+
+/* =====================================================
+   COMMON PAGE COMPONENTS
+===================================================== */
+
+.page-heading {
+    margin-bottom: 27px;
+}
+
+.page-heading h1 {
+    font-family: "Manrope", sans-serif;
+    font-size: clamp(25px, 3vw, 34px);
+    letter-spacing: -1.3px;
+    color: var(--dp-text);
+    margin: 0 0 8px;
+}
+
+.page-heading p {
+    color: var(--dp-muted);
+    font-size: 13px;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.section-card,
+.content-card {
+    background: var(--dp-white);
+    border: 1px solid var(--dp-border);
+    border-radius: var(--dp-radius);
+    box-shadow: var(--dp-shadow);
+    padding: 23px;
+    margin-bottom: 22px;
+}
+
+.section-card h2,
+.content-card h2 {
+    font-size: 16px;
+    margin: 0 0 8px;
+    color: var(--dp-text);
+}
+
+.section-card p,
+.content-card p {
+    color: var(--dp-muted);
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+input,
+select,
+textarea {
+    max-width: 100%;
+    color: var(--dp-text);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--dp-primary) !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+button,
+.primary-button {
+    transition: all 0.2s ease;
+}
+
+button:hover,
+.primary-button:hover {
+    transform: translateY(-2px);
+}
+
+/* =====================================================
+   TABLES
+===================================================== */
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 12px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--dp-white);
+}
+
+th {
+    background: #24344B;
+    color: #AFC0D5;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    text-align: left;
+    padding: 14px;
+}
+
+td {
+    color: #CBD5E1;
+    font-size: 12px;
+    padding: 14px;
+    border-bottom: 1px solid var(--dp-border);
+}
+
+tr:hover td {
+    background: #223149;
+}
+
+/* =====================================================
+   FORM ELEMENTS
+===================================================== */
+
+input,
+select,
+textarea {
+    background: #152238;
+    border: 1px solid var(--dp-border);
+    border-radius: 9px;
+    padding: 11px 13px;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #718096;
+}
+
+select option {
+    background: #1B2940;
+    color: white;
+}
+
+/* =====================================================
+   FLASH MESSAGES
+===================================================== */
+
+.flash-message {
+    padding: 13px 16px;
+    border-radius: 10px;
+    background: #173D32;
+    color: #86EFAC;
+    border: 1px solid #276749;
+    margin-bottom: 18px;
+    font-size: 12px;
+}
+
+/* =====================================================
+   REPORTS & EXPORT STUDIO
+===================================================== */
+
+.reports-page {
+    width: 100%;
+    animation: reportFadeIn 0.5s ease;
+}
+
+@keyframes reportFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.reports-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+}
+
+.section-eyebrow {
+    display: block;
+    color: #60A5FA;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.7px;
+    margin-bottom: 10px;
+}
+
+.reports-heading h1 {
+    color: var(--dp-text);
+    font-size: clamp(25px, 3vw, 34px);
+    font-weight: 800;
+    letter-spacing: -1.2px;
+    margin: 0 0 8px;
+}
+
+.reports-heading p,
+.report-section-heading p {
+    color: var(--dp-muted);
+    font-size: 13px;
+    margin: 0;
+}
+
+.reports-heading-icon {
+    width: 55px;
+    height: 55px;
+    border-radius: 17px;
+    background: #1E3A5F;
+    color: #60A5FA;
+    display: grid;
+    place-items: center;
+    font-size: 22px;
+}
+
+.report-overview {
+    background: linear-gradient(115deg, #172C49, #1E4778);
+    border: 1px solid #2B4F78;
+    border-radius: 18px;
+    padding: 27px 32px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 22px;
+}
+
+.report-status {
+    color: #BFDBFE;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-dot {
+    height: 7px;
+    width: 7px;
+    border-radius: 50%;
+    background: #22C55E;
+    box-shadow: 0 0 10px #22C55E;
+}
+
+.report-overview h2 {
+    font-size: 22px;
+    margin: 15px 0 8px;
+    color: #FFFFFF;
+    font-weight: 750;
+}
+
+.report-overview p {
+    color: #C5D5E8;
+    font-size: 12px;
+    margin: 0;
+}
+
+.report-overview-icon {
+    font-size: 75px;
+    color: rgba(255, 255, 255, 0.12);
+    padding: 0 25px;
+}
+
+/* Report Statistics */
+
+.report-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 35px;
+}
+
+.report-stat-card {
+    background: var(--dp-white);
+    border: 1px solid var(--dp-border);
+    border-radius: 15px;
+    padding: 19px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.report-stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+}
+
+.report-stat-icon {
+    height: 36px;
+    width: 36px;
+    border-radius: 11px;
+    display: grid;
+    place-items: center;
+    color: #60A5FA;
+    background: #1E3A5F;
+    margin-bottom: 15px;
+}
+
+.report-stat-icon.warning {
+    color: #FBBF24;
+    background: #49391D;
+}
+
+.report-stat-icon.danger {
+    color: #F87171;
+    background: #48282D;
+}
+
+.report-stat-card > span {
+    display: block;
+    color: var(--dp-muted);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.report-stat-card strong {
+    display: block;
+    color: var(--dp-text);
+    font-size: 27px;
+    font-weight: 800;
+    margin: 5px 0;
+}
+
+.report-stat-card small {
+    color: #8293A9;
+    font-size: 10px;
+}
+
+/* Export Section */
+
+.report-section-heading {
+    margin-bottom: 18px;
+}
+
+.report-section-heading h2 {
+    color: var(--dp-text);
+    font-size: 21px;
+    margin: 0 0 7px;
+    font-weight: 750;
+}
+
+.export-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.export-card {
+    background: var(--dp-white);
+    border: 1px solid var(--dp-border);
+    border-radius: 17px;
+    padding: 24px;
+    transition: 0.25s ease;
+}
+
+.export-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.export-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 19px;
+}
+
+.export-file-icon {
+    height: 48px;
+    width: 48px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    background: #1E3A5F;
+    color: #60A5FA;
+    font-size: 22px;
+}
+
+.pdf-export .export-file-icon {
+    background: #48282D;
+    color: #F87171;
+}
+
+.export-tag {
+    color: var(--dp-muted);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+}
+
+.export-card h3 {
+    color: var(--dp-text);
+    font-size: 19px;
+    margin: 0 0 9px;
+    font-weight: 750;
+}
+
+.export-card > p {
+    color: var(--dp-muted);
+    font-size: 12px;
+    line-height: 1.8;
+    min-height: 43px;
+    margin: 0 0 18px;
+}
+
+.export-details {
+    display: grid;
+    gap: 11px;
+    padding: 16px 0;
+    border-top: 1px solid var(--dp-border);
+    border-bottom: 1px solid var(--dp-border);
+    margin-bottom: 19px;
+}
+
+.export-details span {
+    color: #B7C5D6;
+    font-size: 11px;
+}
+
+.export-details i {
+    color: #60A5FA;
+    margin-right: 8px;
+}
+
+.export-button {
+    min-height: 43px;
+    padding: 0 17px;
+    border-radius: 10px;
+    background: #2563EB;
+    color: white !important;
+    text-decoration: none !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 700;
+    transition: 0.2s ease;
+}
+
+.export-button:hover {
+    background: #3B82F6;
+    transform: translateY(-1px);
+}
+
+.pdf-export .export-button {
+    background: #B45353;
+}
+
+.pdf-export .export-button:hover {
+    background: #D06464;
+}
+
+/* Report Note */
+
+.report-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: #1A304A;
+    border: 1px solid #2B4564;
+    padding: 15px 18px;
+    border-radius: 12px;
+    margin-top: 22px;
+    color: #93BCEB;
+}
+
+.report-note i {
+    margin-top: 2px;
+}
+
+.report-note p {
+    font-size: 11px;
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* Empty State */
+
+.report-empty-state {
+    min-height: 390px;
+    background: var(--dp-white);
+    border: 1px solid var(--dp-border);
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 35px;
+}
+
+.empty-report-icon {
+    height: 75px;
+    width: 75px;
+    border-radius: 23px;
+    display: grid;
+    place-items: center;
+    background: #1E3A5F;
+    color: #60A5FA;
+    font-size: 29px;
+    margin-bottom: 22px;
+}
+
+.report-empty-state h2 {
+    color: var(--dp-text);
+    font-size: 23px;
+    margin: 0 0 10px;
+}
+
+.report-empty-state p {
+    max-width: 430px;
+    color: var(--dp-muted);
+    font-size: 12px;
+    line-height: 1.8;
+    margin: 0 0 22px;
+}
+
+.report-empty-state .export-button {
+    min-width: 180px;
+}
+
+/* =====================================================
+   RESPONSIVE DESIGN
+===================================================== */
+
+@media (max-width: 1050px) {
+
+    .app-sidebar {
+        width: 225px;
+        min-width: 225px;
+    }
+
+    .app-main {
+        margin-left: 225px;
+        width: calc(100% - 225px);
+    }
+
+    .app-content {
+        padding: 28px 23px;
+    }
+
+    .app-topbar {
+        padding: 0 23px;
+    }
+
+    .report-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 760px) {
+
+    .app-sidebar {
+        transform: translateX(-100%);
+        width: 250px;
+        min-width: 250px;
+        box-shadow: 10px 0 35px rgba(0, 0, 0, 0.35);
+    }
+
+    .app-sidebar.open {
+        transform: translateX(0);
+    }
+
+    .app-main {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .sidebar-toggle {
+        display: grid;
+        place-items: center;
+    }
+
+    .app-topbar {
+        height: 65px;
+        min-height: 65px;
+        padding: 0 17px;
+    }
+
+    .app-content {
+        padding: 24px 16px;
+    }
+
+    .app-footer {
+        padding: 15px 17px;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .live-status {
+        font-size: 0;
+        padding: 10px;
+    }
+
+    .live-status .status-indicator {
+        width: 8px;
+        height: 8px;
+    }
+
+    .reports-heading {
+        align-items: flex-start;
+    }
+
+    .reports-heading-icon {
+        width: 43px;
+        height: 43px;
+        font-size: 17px;
+    }
+
+    .report-overview {
+        padding: 22px;
+    }
+
+    .report-overview-icon {
+        display: none;
+    }
+
+    .report-overview h2 {
+        font-size: 18px;
+    }
+
+    .export-options {
+        grid-template-columns: 1fr;
+    }
+
+    .report-stat-card {
+        padding: 17px;
+    }
+
+    .export-card {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 420px) {
+
+    .breadcrumb {
+        gap: 6px;
+        font-size: 10px;
+    }
+
+    .breadcrumb strong {
+        font-size: 11px;
+    }
+
+    .topbar-right {
+        gap: 9px;
+    }
+
+    .section-card,
+    .content-card {
+        padding: 17px;
+    }
+
+    .report-stats {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .report-stat-card strong {
+        font-size: 22px;
+    }
+
+    .report-empty-state {
+        padding: 22px;
+    }
+}
+/* =====================================================
+   DATAPULSE — DASHBOARD SCROLL FIX
+===================================================== */
+
+body.dashboard-body .app-content {
+    padding: 12px 20px 12px;
+}
+
+body.dashboard-body .dashboard-page {
+    min-height: auto;
+    padding: 10px 14px;
+    margin: 0;
+}
+
+body.dashboard-body .app-footer {
+    display: none;
+}
+
+/* Compact dashboard sections */
+
+body.dashboard-body .dashboard-heading {
+    margin-bottom: 10px;
+}
+
+body.dashboard-body .dashboard-dataset-bar {
+    margin-bottom: 12px;
+    padding: 9px 13px;
+}
+
+body.dashboard-body .dashboard-visualization-section,
+body.dashboard-body .dashboard-metrics-section {
+    margin-bottom: 12px;
+}
+
+body.dashboard-body .dashboard-section-heading {
+    margin-bottom: 8px;
+}
+
+body.dashboard-body .dashboard-chart-card {
+    min-height: 145px;
+    padding: 9px;
+}
+
+body.dashboard-body .dashboard-chart-card .chart-container {
+    height: 90px;
+}
+
+body.dashboard-body .dashboard-kpi-grid {
+    gap: 9px;
+}
+
+body.dashboard-body .kpi-card {
+    padding: 10px;
+}
+
+body.dashboard-body .kpi-top {
+    margin-bottom: 6px;
+}
+
+body.dashboard-body .kpi-bottom {
+    padding-top: 6px;
+    margin-top: 6px;
+}
+
+body.dashboard-body .dashboard-quality-card,
+body.dashboard-body .dashboard-preview-card {
+    padding: 10px;
+}
+
+body.dashboard-body .bottom-card-heading {
+    margin-bottom: 7px;
+}
+
+body.dashboard-body .quality-progress {
+    margin-bottom: 8px;
+}
+
+body.dashboard-body .quality-mini-card {
+    min-height: 52px;
+}
+
+body.dashboard-body .preview-table-wrapper {
+    max-height: 125px;
+}
+/* =====================================================
+   DATAPULSE — EXTRA COMPACT DASHBOARD
+===================================================== */
+
+body.dashboard-body .app-content {
+    padding: 8px 16px 8px !important;
+}
+
+body.dashboard-body .dashboard-page {
+    padding: 6px 10px !important;
+}
+
+/* Header */
+
+body.dashboard-body .dashboard-heading {
+    margin-bottom: 7px !important;
+}
+
+body.dashboard-body .dashboard-heading h1 {
+    font-size: 23px;
+}
+
+body.dashboard-body .dashboard-heading p {
+    margin-top: 3px;
+}
+
+/* Dataset bar */
+
+body.dashboard-body .dashboard-dataset-bar {
+    padding: 7px 11px !important;
+    margin-bottom: 9px !important;
+}
+
+/* Chart section */
+
+body.dashboard-body .dashboard-visualization-section {
+    margin-bottom: 9px !important;
+}
+
+body.dashboard-body .dashboard-section-heading {
+    margin-bottom: 6px !important;
+}
+
+body.dashboard-body .dashboard-section-heading h2 {
+    font-size: 16px;
+}
+
+body.dashboard-body .dashboard-chart-grid {
+    gap: 8px !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+}
+
+body.dashboard-body .dashboard-chart-card {
+    min-height: 112px !important;
+    height: 112px;
+    padding: 7px !important;
+}
+
+body.dashboard-body .chart-card-heading {
+    margin-bottom: 3px !important;
+}
+
+body.dashboard-body .chart-number {
+    margin-bottom: 2px;
+    font-size: 7px;
+}
+
+body.dashboard-body .chart-card-heading h3 {
+    font-size: 9px;
+}
+
+body.dashboard-body .chart-card-heading p {
+    margin-top: 2px;
+    font-size: 7px;
+}
+
+body.dashboard-body .chart-menu {
+    width: 20px;
+    height: 20px;
+}
+
+body.dashboard-body .dashboard-chart-card .chart-container {
+    height: 65px !important;
+    min-height: 65px !important;
+    flex: none !important;
+}
+
+/* Performance cards */
+
+body.dashboard-body .dashboard-metrics-section {
+    margin-bottom: 9px !important;
+}
+
+body.dashboard-body .kpi-card {
+    padding: 8px !important;
+}
+
+body.dashboard-body .kpi-icon {
+    width: 25px;
+    height: 25px;
+}
+
+body.dashboard-body .kpi-card h2 {
+    font-size: 18px;
+}
+
+body.dashboard-body .kpi-bottom {
+    margin-top: 5px;
+    padding-top: 5px;
+}
+
+/* Bottom section */
+
+body.dashboard-body .dashboard-bottom-grid {
+    gap: 8px;
+}
+
+body.dashboard-body .dashboard-quality-card,
+body.dashboard-body .dashboard-preview-card {
+    padding: 9px !important;
+}
+
+body.dashboard-body .quality-score strong {
+    font-size: 21px;
+}
+
+body.dashboard-body .quality-mini-card {
+    min-height: 45px;
+}
+
+body.dashboard-body .preview-table-wrapper {
+    max-height: 110px;
+}
+/* =====================================================
+   DATAPULSE — READABLE CHARTS + COMPACT CARDS
+===================================================== */
+
+/* Four charts in each row */
+body.dashboard-body .dashboard-chart-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+}
+
+/* Chart cards */
+body.dashboard-body .dashboard-chart-card {
+    height: 165px !important;
+    min-height: 165px !important;
+    padding: 10px !important;
+    overflow: hidden;
+}
+
+/* Chart heading */
+body.dashboard-body .chart-card-heading {
+    margin-bottom: 6px !important;
+}
+
+body.dashboard-body .chart-card-heading h3 {
+    font-size: 11px !important;
+}
+
+body.dashboard-body .chart-card-heading p {
+    font-size: 9px !important;
+}
+
+/* Actual graph area */
+body.dashboard-body .dashboard-chart-card .chart-container {
+    height: 115px !important;
+    min-height: 115px !important;
+    flex: none !important;
+    position: relative;
+    width: 100%;
+}
+
+body.dashboard-body .dashboard-chart-card canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Compact space between sections */
+body.dashboard-body .dashboard-visualization-section,
+body.dashboard-body .dashboard-metrics-section {
+    margin-bottom: 8px !important;
+}
+
+/* Keep metric cards compact */
+body.dashboard-body .kpi-card {
+    padding: 8px !important;
+}
+
+/* Tablet */
+@media (max-width: 992px) {
+    body.dashboard-body .dashboard-chart-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    body.dashboard-body .dashboard-chart-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    body.dashboard-body .dashboard-chart-card {
+        height: 190px !important;
+        min-height: 190px !important;
+    }
+
+    body.dashboard-body .dashboard-chart-card .chart-container {
+        height: 140px !important;
+        min-height: 140px !important;
+    }
+}
+/* DASHBOARD — COMPACT TEXT SIZES */
+
+/* Main heading */
+body.dashboard-body .dashboard-heading h1 {
+    font-size: 20px !important;
+}
+
+body.dashboard-body .dashboard-heading p {
+    font-size: 10px !important;
+}
+
+/* Section headings */
+body.dashboard-body .dashboard-section-heading h2 {
+    font-size: 13px !important;
+}
+
+body.dashboard-body .dashboard-section-heading p {
+    font-size: 9px !important;
+}
+
+/* Chart titles */
+body.dashboard-body .chart-card-heading h3 {
+    font-size: 10px !important;
+}
+
+body.dashboard-body .chart-card-heading p {
+    font-size: 8px !important;
+}
+
+body.dashboard-body .chart-number {
+    font-size: 7px !important;
+}
+
+/* KPI cards */
+body.dashboard-body .kpi-card h2 {
+    font-size: 17px !important;
+}
+
+body.dashboard-body .kpi-card h3 {
+    font-size: 10px !important;
+}
+
+body.dashboard-body .kpi-card p,
+body.dashboard-body .kpi-bottom {
+    font-size: 8px !important;
+}
+
+/* Dataset information */
+body.dashboard-body .dashboard-dataset-bar,
+body.dashboard-body .dashboard-dataset-bar p,
+body.dashboard-body .dashboard-dataset-bar span {
+    font-size: 9px !important;
+}
+
+/* Data health */
+body.dashboard-body .quality-mini-card {
+    font-size: 9px !important;
+}
+
+body.dashboard-body .quality-score {
+    font-size: 11px !important;
+}
+
+/* Data preview table */
+body.dashboard-body .dashboard-preview-table th,
+body.dashboard-body .dashboard-preview-table td {
+    font-size: 8px !important;
+    padding: 5px 7px !important;
+}
+
+/* General labels */
+body.dashboard-body .dashboard-page small,
+body.dashboard-body .dashboard-page label {
+    font-size: 8px !important;
+}
+/* =========================================
+   DATAPULSE — FIXED DESKTOP LAYOUT
+   Target: 1920 × 1080
+========================================= */
+
+@media (min-width: 1200px) {
+
+    body.dashboard-body {
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    body.dashboard-body .app-shell {
+        height: 100vh;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    body.dashboard-body .app-sidebar {
+        height: 100vh;
+        min-height: 0;
+        overflow: hidden;
+        padding: 18px 15px 12px;
+    }
+
+    body.dashboard-body .sidebar-brand {
+        padding-bottom: 18px;
+        margin-bottom: 0;
+    }
+
+    body.dashboard-body .sidebar-label {
+        padding-top: 7px;
+        padding-bottom: 7px;
+    }
+
+    body.dashboard-body .secondary-label {
+        margin-top: 12px;
+    }
+
+    body.dashboard-body .sidebar-navigation {
+        gap: 3px;
+    }
+
+    body.dashboard-body .sidebar-link {
+        min-height: 38px;
+        padding: 8px 11px;
+        font-size: 12px;
+    }
+
+    body.dashboard-body .sidebar-bottom {
+        margin-top: auto;
+        padding-top: 8px;
+    }
+
+    body.dashboard-body .sidebar-decoration {
+        margin-bottom: 8px;
+        padding: 12px;
+    }
+
+    body.dashboard-body .sidebar-decoration p {
+        margin-top: 10px;
+    }
+
+    body.dashboard-body .sidebar-home {
+        padding: 8px 11px;
+    }
+
+    body.dashboard-body .app-main {
+        height: 100vh;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    body.dashboard-body .app-topbar {
+        flex-shrink: 0;
+    }
+
+    body.dashboard-body .app-content {
+        height: 0;
+        min-height: 0;
+        flex: 1;
+        overflow: hidden;
+    }
+
+    body.dashboard-body .app-footer {
+        display: none;
+    }
+}
+/* TEMPORARY FIX — SHOW COMPLETE DASHBOARD */
+
+@media (min-width: 1200px) {
+
+    body.dashboard-body .app-content {
+        height: 0;
+        min-height: 0;
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    body.dashboard-body .dashboard-page {
+        min-height: auto;
+        height: auto;
+    }
+}
+/* =========================================
+   DATAPULSE — FINAL NO-SCROLL DASHBOARD
+   Target: 1920 × 1080
+========================================= */
+
+@media (min-width: 1200px) {
+
+    html,
+    body.dashboard-body {
+        height: 100%;
+        margin: 0;
+        overflow: hidden !important;
+    }
+
+    body.dashboard-body .app-shell {
+        height: 100vh;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    body.dashboard-body .app-sidebar {
+        height: 100vh;
+        min-height: 0;
+        overflow: hidden !important;
+    }
+
+    body.dashboard-body .app-main {
+        height: 100vh;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    body.dashboard-body .app-topbar {
+        flex: 0 0 60px;
+        min-height: 60px;
+    }
+
+    body.dashboard-body .app-content {
+        flex: 1 1 auto;
+        height: 0;
+        min-height: 0;
+        padding: 8px 18px !important;
+        overflow: hidden !important;
+    }
+
+    body.dashboard-body .app-footer {
+        display: none;
+    }
+
+    body.dashboard-body .dashboard-page {
+        width: 100%;
+        height: 100%;
+        min-height: 0 !important;
+        padding: 5px 0 !important;
+        margin: 0;
+        overflow: hidden !important;
+    }
+
+    /* HEADER */
+
+    body.dashboard-body .dashboard-heading {
+        margin-bottom: 7px !important;
+    }
+
+    body.dashboard-body .dashboard-heading h1 {
+        font-size: 22px !important;
+    }
+
+    body.dashboard-body .dashboard-heading p {
+        font-size: 10px !important;
+    }
+
+    /* DATASET BAR */
+
+    body.dashboard-body .dashboard-dataset-bar {
+        min-height: 48px !important;
+        padding: 6px 12px !important;
+        margin-bottom: 7px !important;
+    }
+
+    /* SECTION HEADINGS */
+
+    body.dashboard-body .dashboard-section-heading {
+        margin-bottom: 5px !important;
+    }
+
+    body.dashboard-body .dashboard-section-heading h2 {
+        font-size: 15px !important;
+    }
+
+    body.dashboard-body .dashboard-section-heading p {
+        font-size: 9px !important;
+    }
+
+    /* VISUAL INTELLIGENCE */
+
+    body.dashboard-body .dashboard-visualization-section {
+        margin-bottom: 7px !important;
+    }
+
+    body.dashboard-body .dashboard-chart-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 7px !important;
+    }
+
+    body.dashboard-body .dashboard-chart-card {
+        height: 115px !important;
+        min-height: 115px !important;
+        padding: 7px !important;
+    }
+
+    body.dashboard-body .chart-card-heading {
+        margin-bottom: 3px !important;
+    }
+
+    body.dashboard-body .chart-card-heading h3 {
+        font-size: 9px !important;
+    }
+
+    body.dashboard-body .chart-card-heading p {
+        font-size: 7px !important;
+    }
+
+    body.dashboard-body .dashboard-chart-card .chart-container {
+        height: 75px !important;
+        min-height: 0 !important;
+    }
+
+    /* PERFORMANCE SUMMARY */
+
+    body.dashboard-body .dashboard-metrics-section {
+        margin-bottom: 7px !important;
+    }
+
+    body.dashboard-body .dashboard-kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 7px !important;
+    }
+
+    body.dashboard-body .kpi-card {
+        padding: 7px 11px !important;
+    }
+
+    body.dashboard-body .kpi-card h2 {
+        font-size: 18px !important;
+        margin-bottom: 2px !important;
+    }
+
+    body.dashboard-body .kpi-top {
+        margin-bottom: 3px !important;
+    }
+
+    body.dashboard-body .kpi-bottom {
+        margin-top: 3px !important;
+        padding-top: 3px !important;
+    }
+
+    /* DATA HEALTH + PREVIEW */
+
+    body.dashboard-body .dashboard-bottom-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.7fr);
+        gap: 8px !important;
+    }
+
+    body.dashboard-body .dashboard-quality-card,
+    body.dashboard-body .dashboard-preview-card {
+        padding: 8px !important;
+    }
+
+    body.dashboard-body .bottom-card-heading {
+        margin-bottom: 5px !important;
+    }
+
+    body.dashboard-body .quality-score strong {
+        font-size: 19px !important;
+    }
+
+    body.dashboard-body .quality-mini-card {
+        min-height: 40px !important;
+        padding: 3px !important;
+    }
+
+    body.dashboard-body .preview-table-wrapper {
+        max-height: 100px !important;
+        overflow-y: auto !important;
+        overflow-x: auto !important;
+    }
+
+    body.dashboard-body .dashboard-preview-table th,
+    body.dashboard-body .dashboard-preview-table td {
+        padding: 5px 8px !important;
+        font-size: 9px !important;
+    }
+}
+@media (min-width: 1200px) {
+
+    body.dashboard-body .app-content {
+        overflow-y: auto !important;
+        height: auto !important;
+    }
+
+    body.dashboard-body .dashboard-page {
+        height: auto !important;
+        min-height: auto !important;
+        overflow: visible !important;
+    }
+}
+/* =====================================================
+   DATAPULSE — FINAL DASHBOARD SCROLL FIX
+   Target: ASUS VivoBook 15 | 1920 × 1080
+===================================================== */
+
+@media (min-width: 1200px) {
+
+    /* =========================================
+       01. PAGE SCROLL
+    ========================================= */
+
+    html,
+    body.dashboard-body {
+        height: auto !important;
+        min-height: 100% !important;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+    }
+
+    /* =========================================
+       02. APPLICATION LAYOUT
+    ========================================= */
+
+    body.dashboard-body .app-shell {
+        height: auto !important;
+        min-height: 100vh !important;
+        overflow: visible !important;
+    }
+
+    body.dashboard-body .app-main {
+        height: auto !important;
+        min-height: 100vh !important;
+        overflow: visible !important;
+    }
+
+    body.dashboard-body .app-topbar {
+        flex-shrink: 0;
+    }
+
+    body.dashboard-body .app-content {
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+
+        flex: 1 0 auto !important;
+
+        overflow: visible !important;
+
+        padding: 8px 18px !important;
+    }
+
+    /* =========================================
+       03. DASHBOARD CONTENT
+    ========================================= */
+
+    body.dashboard-body .dashboard-page {
+        width: 100%;
+
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+
+        overflow: visible !important;
+
+        padding: 5px 0 !important;
+        margin: 0;
+    }
+
+    /* =========================================
+       04. DATA HEALTH
+    ========================================= */
+
+    body.dashboard-body .dashboard-bottom-grid {
+        align-items: stretch;
+        overflow: visible !important;
+    }
+
+    body.dashboard-body .dashboard-quality-card {
+        height: auto !important;
+        min-height: 0 !important;
+        overflow: visible !important;
+    }
+
+    /* =========================================
+       05. DATA PREVIEW TABLE
+    ========================================= */
+
+    body.dashboard-body .dashboard-preview-card {
+        min-width: 0;
+        overflow: visible !important;
+    }
+
+    body.dashboard-body .preview-table-wrapper {
+        display: block;
+
+        width: 100%;
+        max-height: 220px !important;
+
+        overflow-x: auto !important;
+        overflow-y: auto !important;
+
+        scrollbar-width: thin;
+        scrollbar-color: #435875 #17243A;
+    }
+
+    body.dashboard-body .dashboard-preview-table {
+        width: 100%;
+        min-width: 650px;
+        border-collapse: collapse;
+    }
+
+    body.dashboard-body .dashboard-preview-table thead {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+    }
+
+    /* =========================================
+       06. HIDE DASHBOARD FOOTER
+    ========================================= */
+
+    body.dashboard-body .app-footer {
+        display: none;
+    }
+}

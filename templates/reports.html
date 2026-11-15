@@ -1,0 +1,254 @@
+{% extends "base.html" %}
+
+{% block title %}Reports & Export | DataPulse{% endblock %}
+{% block page_name %}Reports & Export{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/reports.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="reports-page">
+
+    <!-- PAGE HEADER -->
+    <div class="reports-heading">
+        <div>
+            <span class="section-eyebrow">DATA MANAGEMENT / REPORTS</span>
+            <h1>Reports & Export Studio</h1>
+            <p>Transform your dataset into meaningful, shareable reports.</p>
+        </div>
+
+        <div class="reports-heading-icon">
+            <i class="fa-solid fa-file-invoice"></i>
+        </div>
+    </div>
+
+    {% if has_dataset %}
+
+    <!-- DATASET STATUS -->
+    <section class="report-overview">
+
+        <div class="report-overview-text">
+
+            <span class="report-status">
+                <span class="status-dot"></span>
+                DATASET CONNECTED
+            </span>
+
+            <h2>Your dataset is ready for reporting.</h2>
+
+            <p>
+                Your active dataset has been loaded successfully.
+                Review its summary and generate your report.
+            </p>
+
+            <div class="report-overview-meta">
+                <span><i class="fa-solid fa-circle-check"></i> Dataset available</span>
+                <span><i class="fa-solid fa-shield-halved"></i> Export ready</span>
+            </div>
+
+        </div>
+
+        <div class="report-overview-icon">
+            <i class="fa-solid fa-chart-pie"></i>
+        </div>
+
+    </section>
+
+    <!-- STATISTICS -->
+    <div class="report-stats">
+
+        <article class="report-stat-card">
+            <div class="report-stat-top">
+                <div class="report-stat-icon blue">
+                    <i class="fa-solid fa-table-cells"></i>
+                </div>
+                <span class="stat-label">RECORDS</span>
+            </div>
+
+            <span>Total Records</span>
+            <strong>{{ "{:,}".format(rows) }}</strong>
+            <small>Rows in active dataset</small>
+        </article>
+
+        <article class="report-stat-card">
+            <div class="report-stat-top">
+                <div class="report-stat-icon purple">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+                <span class="stat-label">STRUCTURE</span>
+            </div>
+
+            <span>Total Columns</span>
+            <strong>{{ columns }}</strong>
+            <small>Available data fields</small>
+        </article>
+
+        <article class="report-stat-card">
+            <div class="report-stat-top">
+                <div class="report-stat-icon orange">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <span class="stat-label">QUALITY</span>
+            </div>
+
+            <span>Missing Values</span>
+            <strong>{{ "{:,}".format(missing) }}</strong>
+            <small>Empty data cells</small>
+        </article>
+
+        <article class="report-stat-card">
+            <div class="report-stat-top">
+                <div class="report-stat-icon red">
+                    <i class="fa-solid fa-copy"></i>
+                </div>
+                <span class="stat-label">DUPLICATES</span>
+            </div>
+
+            <span>Duplicate Rows</span>
+            <strong>{{ "{:,}".format(duplicates) }}</strong>
+            <small>Repeated records</small>
+        </article>
+
+    </div>
+
+    <!-- EXPORT SECTION -->
+    <div class="report-section-heading">
+
+        <div>
+            <span class="section-eyebrow">EXPORT CENTER</span>
+            <h2>Choose your export format</h2>
+            <p>Download your dataset or generate a detailed analytics report.</p>
+        </div>
+
+        <div class="export-center-badge">
+            <i class="fa-solid fa-cloud-arrow-down"></i>
+            EXPORT CENTER
+        </div>
+
+    </div>
+
+    <div class="export-options">
+
+        <!-- CSV CARD -->
+        <article class="export-card csv-export">
+
+            <div class="export-card-top">
+                <div class="export-file-icon">
+                    <i class="fa-solid fa-file-csv"></i>
+                </div>
+
+                <span class="export-tag">DATA FILE</span>
+            </div>
+
+            <h3>CSV Export</h3>
+
+            <p>
+                Download your active dataset in CSV format.
+                Perfect for spreadsheets and further analysis.
+            </p>
+
+            <div class="export-details">
+                <span><i class="fa-solid fa-check"></i> Complete dataset records</span>
+                <span><i class="fa-solid fa-check"></i> Original column headers</span>
+                <span><i class="fa-solid fa-check"></i> Spreadsheet compatible</span>
+            </div>
+
+            <a
+                href="{{ url_for('export_csv') }}"
+                class="export-button csv-button"
+                data-export="csv"
+            >
+                <span>Download CSV</span>
+                <i class="fa-solid fa-download"></i>
+            </a>
+
+        </article>
+
+        <!-- PDF CARD -->
+        <article class="export-card pdf-export">
+
+            <div class="export-card-top">
+                <div class="export-file-icon">
+                    <i class="fa-solid fa-file-pdf"></i>
+                </div>
+
+                <span class="export-tag">REPORT FILE</span>
+            </div>
+
+            <h3>PDF Analytics Report</h3>
+
+            <p>
+                Generate a professional PDF containing dataset
+                overview, quality analysis and numerical statistics.
+            </p>
+
+            <div class="export-details">
+                <span><i class="fa-solid fa-check"></i> Dataset overview</span>
+                <span><i class="fa-solid fa-check"></i> Numerical analysis</span>
+                <span><i class="fa-solid fa-check"></i> Data quality report</span>
+            </div>
+
+            <a
+                href="{{ url_for('export_pdf') }}"
+                class="export-button pdf-button"
+                data-export="pdf"
+            >
+                <span>Download PDF</span>
+                <i class="fa-solid fa-download"></i>
+            </a>
+
+        </article>
+
+    </div>
+
+    <!-- EXPORT INFORMATION -->
+    <div class="report-note">
+        <div class="note-icon">
+            <i class="fa-solid fa-circle-info"></i>
+        </div>
+
+        <div>
+            <strong>Important information</strong>
+            <p>
+                Reports are generated using your currently active dataset.
+                You can switch datasets through Dataset History before exporting.
+            </p>
+        </div>
+    </div>
+
+    {% else %}
+
+    <!-- EMPTY STATE -->
+    <div class="report-empty-state">
+
+        <div class="empty-report-icon">
+            <i class="fa-solid fa-file-circle-plus"></i>
+        </div>
+
+        <span class="section-eyebrow">NO ACTIVE DATASET</span>
+
+        <h2>Your report studio is waiting.</h2>
+
+        <p>
+            Upload a CSV or Excel dataset to view its summary
+            and generate downloadable analytics reports.
+        </p>
+
+        <a href="{{ url_for('dashboard') }}" class="export-button empty-button">
+            <span>Go to Dashboard</span>
+            <i class="fa-solid fa-arrow-right"></i>
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/reports.js') }}"></script>
+{% endblock %}

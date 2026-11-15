@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+
+{% block title %}Dataset History | DataPulse{% endblock %}
+{% block page_name %}DATASET HISTORY{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/history.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="history-page">
+
+    <div class="history-header">
+        <div>
+            <span class="history-tag">DATA MANAGEMENT</span>
+            <h1>Dataset History</h1>
+            <p>View, restore and manage your previously uploaded datasets.</p>
+        </div>
+
+        <a href="{{ url_for('dashboard') }}" class="history-back">
+            <i class="fa-solid fa-arrow-left"></i>
+            Dashboard
+        </a>
+    </div>
+
+    <div class="history-summary">
+        <div class="summary-icon">
+            <i class="fa-solid fa-database"></i>
+        </div>
+        <div>
+            <span>Total Saved Datasets</span>
+            <h2>{{ datasets|length if datasets else 0 }}</h2>
+        </div>
+    </div>
+
+    <div class="history-card">
+
+        <div class="history-card-header">
+            <div>
+                <h3>Previously Uploaded Datasets</h3>
+                <p>Your dataset activity and saved files.</p>
+            </div>
+
+            <span class="history-count">
+                {{ datasets|length if datasets else 0 }} Records
+            </span>
+        </div>
+
+        {% if datasets %}
+
+        <div class="table-responsive">
+
+            <table class="history-table">
+
+                <thead>
+                    <tr>
+                        <th>Dataset Name</th>
+                        <th>Upload Date</th>
+                        <th>Rows</th>
+                        <th>Columns</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for item in datasets %}
+
+                    <tr>
+
+                        <td>
+                            <div class="dataset-name">
+                                <div class="file-icon">
+                                    <i class="fa-solid fa-file-csv"></i>
+                                </div>
+                                <span>{{ item["dataset_name"] }}</span>
+                            </div>
+                        </td>
+
+                        <td>
+                            <span class="date-text">
+                                <i class="fa-regular fa-calendar"></i>
+                                {{ item["upload_date"] }}
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="data-count">
+                                {{ item["total_rows"] }}
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="data-count">
+                                {{ item["total_columns"] }}
+                            </span>
+                        </td>
+
+                        <td>
+                            <div class="history-actions">
+
+                                <a
+                                    href="{{ url_for('load_old_dataset', dataset_id=item['id']) }}"
+                                    class="load-btn"
+                                >
+                                    <i class="fa-solid fa-folder-open"></i>
+                                    Load
+                                </a>
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for('remove_dataset', dataset_id=item['id']) }}"
+                                    class="delete-form"
+                                >
+                                    <button
+                                        type="submit"
+                                        class="delete-btn"
+                                        data-delete
+                                    >
+                                        <i class="fa-solid fa-trash"></i>
+                                        Delete
+                                    </button>
+                                </form>
+
+                            </div>
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="history-empty">
+
+            <div class="empty-icon">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+            </div>
+
+            <h3>No Dataset History Yet</h3>
+
+            <p>
+                Your uploaded datasets will appear here.
+                Upload a dataset to start building your history.
+            </p>
+
+            <a href="{{ url_for('dashboard') }}" class="upload-history-btn">
+                <i class="fa-solid fa-upload"></i>
+                Upload Dataset
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/history.js') }}"></script>
+{% endblock %}

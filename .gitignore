@@ -1,0 +1,14 @@
+venv/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.pytest_cache.zip
+datapulse.db
+.env
+.env.*
+uploads/*
+reports/*.pdf
+reports/*.csv
+reports/__pycache__/
+static/charts/*.png

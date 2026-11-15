@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}
+            DataPulse | Intelligent Analytics
+        {% endblock %}
+    </title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <!-- Application CSS -->
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/dashboard.css') }}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/responsive.css') }}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/pages.css') }}"
+    >
+
+    {% block extra_css %}{% endblock %}
+
+</head>
+
+
+<body class="{% block body_class %}app-body{% endblock %}">
+
+<div class="app-shell">
+
+    <!-- =================================
+         SIDEBAR
+    ================================== -->
+
+    <aside class="app-sidebar">
+
+        <!-- BRAND LOGO -->
+
+        <a href="{{ url_for('home') }}" class="sidebar-brand">
+
+            <span class="brand-symbol">
+                <i class="fa-solid fa-chart-line"></i>
+            </span>
+
+            <span class="brand-name">
+                DataPulse
+            </span>
+
+        </a>
+
+
+        <!-- WORKSPACE NAVIGATION -->
+
+        <div class="sidebar-label">
+            WORKSPACE
+        </div>
+
+
+        <nav class="sidebar-navigation">
+
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="sidebar-link {% if request.endpoint == 'dashboard' %}active{% endif %}"
+            >
+                <i class="fa-solid fa-house"></i>
+                <span>Dashboard</span>
+            </a>
+
+
+            <a
+                href="{{ url_for('analytics') }}"
+                class="sidebar-link {% if request.endpoint == 'analytics' %}active{% endif %}"
+            >
+                <i class="fa-solid fa-chart-pie"></i>
+                <span>Analytics</span>
+            </a>
+
+
+            <a
+                href="{{ url_for('cleaning') }}"
+                class="sidebar-link {% if request.endpoint == 'cleaning' %}active{% endif %}"
+            >
+                <i class="fa-solid fa-broom"></i>
+                <span>Data Cleaning</span>
+            </a>
+
+
+            <a
+                href="{{ url_for('insights') }}"
+                class="sidebar-link {% if request.endpoint == 'insights' %}active{% endif %}"
+            >
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <span>InsightAI</span>
+                <span class="sidebar-new">AI</span>
+            </a>
+
+
+            <a
+                href="{{ url_for('visualization') }}"
+                class="sidebar-link {% if request.endpoint == 'visualization' %}active{% endif %}"
+            >
+                <i class="fa-solid fa-chart-column"></i>
+                <span>Visualize</span>
+            </a>
+
+
+            <a
+                href="{{ url_for('visualquery') }}"
+                class="sidebar-link {% if request.endpoint == 'visualquery' %}active{% endif %}"
+            >
+                <i class="fa-solid fa-magnifying-glass-chart"></i>
+                <span>VisualQuery</span>
+            </a>
+
+
+            <!-- DATA MANAGEMENT -->
+
+            <div class="sidebar-label secondary-label">
+                DATA MANAGEMENT
+            </div>
+
+
+            <a
+                href="{{ url_for('comparison') }}"
+                class="sidebar-link {% if request.endpoint == 'comparison' %}active{% endif %}"
+            >
+                <i class="fa-solid fa-code-compare"></i>
+                <span>Compare Data</span>
+            </a>
+
+
+            <a
+                href="{{ url_for('reports_page') }}"
+                class="sidebar-link {% if request.endpoint == 'reports_page' %}active{% endif %}"
+            >
+                <i class="fa-solid fa-file-lines"></i>
+                <span>Reports</span>
+            </a>
+
+
+            <a
+                href="{{ url_for('history') }}"
+                class="sidebar-link {% if request.endpoint == 'history' %}active{% endif %}"
+            >
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                <span>Dataset History</span>
+            </a>
+
+        </nav>
+
+
+        <!-- =================================
+             SIDEBAR BOTTOM DESIGN
+        ================================== -->
+
+        <div class="sidebar-bottom">
+
+            <div class="sidebar-decoration">
+
+                <div class="decoration-icon">
+                    <i class="fa-solid fa-chart-simple"></i>
+                </div>
+
+                <div class="decoration-bars">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <p>
+                    Turn Data Into Decisions.
+                </p>
+
+                <small>
+                    Discover insights. Make smarter moves.
+                </small>
+
+            </div>
+
+
+            <a href="{{ url_for('home') }}" class="sidebar-home">
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                <span>Back to Home</span>
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =================================
+         MAIN APPLICATION
+    ================================== -->
+
+    <div class="app-main">
+
+
+        <!-- TOPBAR -->
+
+        <header class="app-topbar">
+
+            <div class="topbar-left">
+
+                <button
+                    class="sidebar-toggle"
+                    id="sidebarToggle"
+                    aria-label="Toggle sidebar"
+                >
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+
+                <div class="breadcrumb">
+
+                    <span>Workspace</span>
+
+                    <i class="fa-solid fa-chevron-right"></i>
+
+                    <strong>
+                        {% block page_name %}
+                            Overview
+                        {% endblock %}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="topbar-right">
+
+                <div class="live-status">
+
+                    <span class="status-indicator"></span>
+
+                    Live Analytics
+
+                </div>
+
+
+                <div class="topbar-avatar">
+                    DP
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- PAGE CONTENT -->
+
+        <main class="app-content">
+
+            {% block content %}{% endblock %}
+
+        </main>
+
+
+
+        <!-- FOOTER -->
+
+        <footer class="app-footer">
+
+            <span>
+                © 2026 DataPulse
+            </span>
+
+            <span>
+                Transforming data into decisions.
+            </span>
+
+        </footer>
+
+    </div>
+
+</div>
+
+
+
+<!-- =================================
+     JAVASCRIPT
+================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/visualquery.js') }}"></script>
+
+{% block extra_js %}{% endblock %}
+
+
+</body>
+</html>

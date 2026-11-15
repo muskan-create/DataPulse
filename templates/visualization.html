@@ -1,0 +1,223 @@
+{% extends "base.html" %}
+
+{% block title %}Visualize Studio | DataPulse{% endblock %}
+{% block page_name %}VISUALIZATION STUDIO{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/visualization.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="visual-page">
+
+    <section class="visual-hero">
+        <div>
+            <span class="visual-eyebrow">DATAPULSE / DATA VISUALIZATION</span>
+            <h1>Visualization Studio</h1>
+            <p>Turn raw data into meaningful visual stories. Explore trends, compare values and discover hidden patterns.</p>
+        </div>
+
+        <div class="visual-hero-icon">
+            <i class="fa-solid fa-chart-pie"></i>
+        </div>
+    </section>
+
+    <section class="visual-stats">
+
+        <div class="visual-stat-card">
+            <div class="visual-stat-icon"><i class="fa-solid fa-table-columns"></i></div>
+            <div>
+                <span>Available Columns</span>
+                <h3>{{ all_columns|length }}</h3>
+            </div>
+        </div>
+
+        <div class="visual-stat-card">
+            <div class="visual-stat-icon blue"><i class="fa-solid fa-calculator"></i></div>
+            <div>
+                <span>Numerical Columns</span>
+                <h3>{{ numerical_columns|length }}</h3>
+            </div>
+        </div>
+
+        <div class="visual-stat-card">
+            <div class="visual-stat-icon purple"><i class="fa-solid fa-chart-simple"></i></div>
+            <div>
+                <span>Chart Types</span>
+                <h3>04</h3>
+            </div>
+        </div>
+
+    </section>
+
+    <div class="visual-layout">
+
+        <!-- CHART CONFIGURATION -->
+
+        <section class="visual-card configuration-card">
+
+            <div class="visual-section-heading">
+                <div>
+                    <span class="visual-label">01 / CONFIGURATION</span>
+                    <h2><i class="fa-solid fa-sliders"></i> Chart Builder</h2>
+                    <p>Customize your visualization settings.</p>
+                </div>
+            </div>
+
+            <form method="POST"
+                  action="{{ url_for('visualization') }}"
+                  id="visualForm">
+
+                <div class="visual-field">
+                    <label for="chart_type">Visualization Type</label>
+
+                    <select name="chart_type" id="chart_type" required>
+                        <option value="bar">Bar Chart</option>
+                        <option value="line">Line Chart</option>
+                        <option value="scatter">Scatter Plot</option>
+                        <option value="histogram">Histogram</option>
+                    </select>
+                </div>
+
+                <div class="visual-field">
+                    <label for="x_column">X-Axis / Data Column</label>
+
+                    <select name="x_column" id="x_column" required>
+                        <option value="">Select a column</option>
+
+                        {% for column in all_columns %}
+                        <option value="{{ column }}"
+                            data-numeric="{{ 'true' if column in numerical_columns else 'false' }}">
+                            {{ column }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="visual-field" id="yField">
+                    <label for="y_column">Y-Axis / Numerical Column</label>
+
+                    <select name="y_column" id="y_column">
+                        <option value="">Select numerical column</option>
+
+                        {% for column in numerical_columns %}
+                        <option value="{{ column }}">{{ column }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="visual-hint" id="chartHint">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <span>Bar charts compare numerical values across categories.</span>
+                </div>
+
+                <button type="submit" class="visual-submit" id="generateButton">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    Generate Visualization
+                </button>
+
+            </form>
+
+            <div class="visual-divider"></div>
+
+            <div class="chart-types-heading">AVAILABLE CHARTS</div>
+
+            <div class="chart-type-list">
+                <div class="chart-type-item">
+                    <i class="fa-solid fa-chart-column"></i>
+                    <span>Bar</span>
+                </div>
+
+                <div class="chart-type-item">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Line</span>
+                </div>
+
+                <div class="chart-type-item">
+                    <i class="fa-solid fa-braille"></i>
+                    <span>Scatter</span>
+                </div>
+
+                <div class="chart-type-item">
+                    <i class="fa-solid fa-chart-area"></i>
+                    <span>Histogram</span>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- CHART PREVIEW -->
+
+        <section class="visual-card preview-card">
+
+            <div class="visual-preview-header">
+                <div>
+                    <span class="visual-label">02 / OUTPUT</span>
+                    <h2><i class="fa-solid fa-chart-area"></i> Visualization Preview</h2>
+                    <p>Your generated chart will appear here.</p>
+                </div>
+
+                {% if chart_filename %}
+                <span class="chart-status">
+                    <span></span> GENERATED
+                </span>
+                {% else %}
+                <span class="chart-status inactive">
+                    <span></span> WAITING
+                </span>
+                {% endif %}
+            </div>
+
+            <div class="chart-stage">
+
+                {% if chart_filename %}
+
+                    <img
+                        src="{{ url_for('static', filename=chart_filename) }}"
+                        alt="Generated data visualization"
+                        class="generated-chart"
+                    >
+
+                {% else %}
+
+                    <div class="chart-empty">
+                        <div class="chart-empty-icon">
+                            <i class="fa-solid fa-chart-simple"></i>
+                        </div>
+
+                        <h3>Your chart will appear here</h3>
+
+                        <p>Choose your chart type and dataset columns to generate your first visualization.</p>
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+            {% if chart_filename %}
+            <div class="chart-output-footer">
+                <span><i class="fa-solid fa-circle-check"></i> Chart generated successfully</span>
+
+                <a href="{{ url_for('static', filename=chart_filename) }}"
+                   download="DataPulse_Visualization.png">
+                    <i class="fa-solid fa-download"></i> Download Chart
+                </a>
+            </div>
+            {% endif %}
+
+        </section>
+
+    </div>
+
+    <div class="visual-footer-note">
+        <i class="fa-solid fa-lightbulb"></i>
+        <span><strong>Visualization Tip:</strong> Use numerical columns for measurements and categorical columns for comparisons. Scatter plots require numerical X and Y columns.</span>
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/visualization.js') }}"></script>
+
+{% endblock %}

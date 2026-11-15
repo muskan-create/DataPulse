@@ -1,0 +1,631 @@
+
+/* =========================================================
+   DATAPULSE — INSIGHTAI
+   Theme: Dark Navy | Royal Blue | Light Blue
+   Target: 1920 × 1080
+========================================================= */
+
+.insight-page {
+    --dp-bg: #101827;
+    --dp-card: #1B2940;
+    --dp-primary: #3B82F6;
+    --dp-light-blue: #60A5FA;
+    --dp-text: #F1F5F9;
+    --dp-muted: #94A3B8;
+    --dp-border: #2B3A50;
+    --dp-success: #34D399;
+    --dp-purple: #A78BFA;
+
+    width: 100%;
+    min-height: 100vh;
+    padding: 18px 22px;
+    background: var(--dp-bg);
+    color: var(--dp-text);
+    font-family: "Inter", "Segoe UI", sans-serif;
+    box-sizing: border-box;
+}
+
+.insight-page *,
+.insight-page *::before,
+.insight-page *::after {
+    box-sizing: border-box;
+}
+
+.insight-page h1,
+.insight-page h2,
+.insight-page h3,
+.insight-page p {
+    margin-top: 0;
+}
+
+/* =========================================================
+   01. PAGE HEADER
+========================================================= */
+
+.insight-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 16px;
+}
+
+.insight-eyebrow {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--dp-light-blue);
+    font-size: 9px;
+    font-weight: 750;
+    letter-spacing: 1.7px;
+}
+
+.insight-heading h1 {
+    margin: 0;
+    color: var(--dp-text);
+    font-size: 27px;
+    font-weight: 750;
+    letter-spacing: -0.8px;
+}
+
+.insight-heading p {
+    margin: 5px 0 0;
+    color: var(--dp-muted);
+    font-size: 11px;
+}
+
+.insight-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border: 1px solid rgba(52, 211, 153, 0.25);
+    border-radius: 8px;
+    background: rgba(52, 211, 153, 0.08);
+    color: var(--dp-success);
+    font-size: 9px;
+    font-weight: 750;
+    letter-spacing: 0.7px;
+    white-space: nowrap;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--dp-success);
+    box-shadow: 0 0 9px rgba(52, 211, 153, 0.6);
+}
+
+/* =========================================================
+   02. HERO BANNER
+========================================================= */
+
+.insight-hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 145px;
+    padding: 22px 26px;
+    margin-bottom: 21px;
+    overflow: hidden;
+    border: 1px solid rgba(96, 165, 250, 0.25);
+    border-radius: 15px;
+    background: linear-gradient(110deg, #172B49, #1D3B65 65%, #244B79);
+}
+
+.insight-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 650px;
+}
+
+.insight-hero-label {
+    display: inline-block;
+    padding: 5px 9px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(96, 165, 250, 0.3);
+    border-radius: 6px;
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--dp-light-blue);
+    font-size: 8px;
+    font-weight: 750;
+    letter-spacing: 1.2px;
+}
+
+.insight-hero h2 {
+    margin: 0 0 7px;
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: 750;
+    letter-spacing: -0.5px;
+}
+
+.insight-hero p {
+    max-width: 550px;
+    margin: 0;
+    color: #CBD5E1;
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+.insight-hero-decoration {
+    position: absolute;
+    right: 55px;
+    top: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 105px;
+    height: 105px;
+    transform: translateY(-50%);
+    border: 1px solid rgba(147, 197, 253, 0.25);
+    border-radius: 28px;
+    background: rgba(96, 165, 250, 0.1);
+    color: var(--dp-light-blue);
+    font-size: 43px;
+    transform-origin: center;
+}
+
+.insight-hero-bottom {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 13px;
+    color: #BFDBFE;
+    font-size: 9px;
+    font-weight: 650;
+}
+
+/* =========================================================
+   03. SECTION HEADINGS
+========================================================= */
+
+.insight-section {
+    width: 100%;
+    margin-bottom: 21px;
+}
+
+.insight-section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.insight-section-title {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.section-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    border: 1px solid rgba(96, 165, 250, 0.2);
+    border-radius: 9px;
+    background: rgba(59, 130, 246, 0.13);
+    color: var(--dp-light-blue);
+    font-size: 14px;
+}
+
+.insight-section-title h2 {
+    margin: 0;
+    color: var(--dp-text);
+    font-size: 17px;
+    font-weight: 750;
+}
+
+.section-label {
+    display: block;
+    margin-top: 4px;
+    color: var(--dp-muted);
+    font-size: 9px;
+}
+
+/* =========================================================
+   04. GENERATED INSIGHTS GRID
+========================================================= */
+
+.insight-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 11px;
+    width: 100%;
+}
+
+.insight-card {
+    position: relative;
+    min-width: 0;
+    min-height: 145px;
+    padding: 14px;
+    overflow: hidden;
+    border: 1px solid var(--dp-border);
+    border-radius: 12px;
+    background: var(--dp-card);
+    transition: 0.2s ease;
+}
+
+.insight-card:hover {
+    border-color: rgba(96, 165, 250, 0.6);
+    transform: translateY(-2px);
+}
+
+.insight-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 13px;
+}
+
+.insight-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 31px;
+    height: 31px;
+    border-radius: 9px;
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--dp-light-blue);
+    font-size: 14px;
+}
+
+.insight-number {
+    color: #64748B;
+    font-size: 9px;
+    font-weight: 750;
+    letter-spacing: 1px;
+}
+
+.insight-card h3 {
+    margin: 0 0 7px;
+    color: var(--dp-muted);
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.insight-value {
+    margin: 0 0 7px;
+    overflow-wrap: anywhere;
+    color: var(--dp-text);
+    font-size: clamp(17px, 1.5vw, 22px);
+    font-weight: 750;
+    letter-spacing: -0.5px;
+}
+
+.insight-card-description {
+    margin: 0;
+    color: var(--dp-muted);
+    font-size: 9px;
+    line-height: 1.6;
+}
+
+.insight-card-content {
+    color: #CBD5E1;
+    font-size: 10px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+.insight-nested-list {
+    padding-left: 16px;
+    margin: 6px 0 0;
+    color: #CBD5E1;
+}
+
+.insight-nested-list li {
+    margin-bottom: 5px;
+}
+
+/* =========================================================
+   05. RECOMMENDATIONS
+========================================================= */
+
+.recommendation-section {
+    margin-top: 20px;
+}
+
+.recommendation-section .insight-section-head {
+    margin-bottom: 12px;
+}
+
+.recommendation-section .section-icon {
+    background: rgba(167, 139, 250, 0.13);
+    color: var(--dp-purple);
+    border-color: rgba(167, 139, 250, 0.2);
+}
+
+.recommendation-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    border-radius: 9px;
+    background: rgba(167, 139, 250, 0.13);
+    color: var(--dp-purple);
+    font-size: 13px;
+}
+
+.recommendation-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 13px 15px;
+    margin-bottom: 9px;
+    border: 1px solid var(--dp-border);
+    border-radius: 10px;
+    background: var(--dp-card);
+    transition: 0.2s ease;
+}
+
+.recommendation-card:hover {
+    border-color: rgba(167, 139, 250, 0.5);
+    background: #202F49;
+}
+
+.recommendation-card p {
+    margin: 2px 0 0;
+    color: #CBD5E1;
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+/* =========================================================
+   06. EMPTY STATES
+========================================================= */
+
+.insight-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 145px;
+    padding: 25px;
+    border: 1px dashed #3B506D;
+    border-radius: 12px;
+    background: var(--dp-card);
+    text-align: center;
+}
+
+.empty-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 43px;
+    height: 43px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    background: rgba(59, 130, 246, 0.13);
+    color: var(--dp-light-blue);
+    font-size: 18px;
+}
+
+.insight-empty h3 {
+    margin: 0 0 6px;
+    color: var(--dp-text);
+    font-size: 13px;
+}
+
+.insight-empty p {
+    max-width: 400px;
+    margin: 0;
+    color: var(--dp-muted);
+    font-size: 10px;
+    line-height: 1.6;
+}
+
+/* =========================================================
+   07. FOOTER NOTE
+========================================================= */
+
+.insight-footer-note {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 14px;
+    margin-top: 17px;
+    border: 1px solid var(--dp-border);
+    border-radius: 9px;
+    background: rgba(59, 130, 246, 0.07);
+    color: var(--dp-muted);
+    font-size: 9px;
+    line-height: 1.6;
+}
+
+.insight-footer-note i {
+    color: var(--dp-light-blue);
+    font-size: 13px;
+}
+
+/* =========================================================
+   08. LINKS + SCROLLBAR
+========================================================= */
+
+.insight-page a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.insight-page button {
+    font-family: inherit;
+}
+
+.insight-page ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.insight-page ::-webkit-scrollbar-track {
+    background: #17243A;
+}
+
+.insight-page ::-webkit-scrollbar-thumb {
+    background: #435875;
+    border-radius: 10px;
+}
+
+/* =========================================================
+   09. LARGE SCREEN COMPACT LAYOUT
+========================================================= */
+
+@media (min-width: 1200px) {
+
+    .insight-page {
+        padding: 10px 18px;
+    }
+
+    .insight-heading {
+        margin-bottom: 10px;
+    }
+
+    .insight-heading h1 {
+        font-size: 23px;
+    }
+
+    .insight-hero {
+        min-height: 118px;
+        padding: 17px 22px;
+        margin-bottom: 15px;
+    }
+
+    .insight-hero h2 {
+        font-size: 19px;
+    }
+
+    .insight-hero-decoration {
+        width: 80px;
+        height: 80px;
+        right: 45px;
+        font-size: 34px;
+    }
+
+    .insight-section {
+        margin-bottom: 14px;
+    }
+
+    .insight-section-head {
+        margin-bottom: 8px;
+    }
+
+    .insight-section-title h2 {
+        font-size: 15px;
+    }
+
+    .insight-grid {
+        gap: 9px;
+    }
+
+    .insight-card {
+        min-height: 125px;
+        padding: 11px;
+    }
+
+    .insight-card-top {
+        margin-bottom: 8px;
+    }
+
+    .insight-value {
+        font-size: 19px;
+    }
+
+    .recommendation-section {
+        margin-top: 13px;
+    }
+
+    .recommendation-card {
+        padding: 10px 13px;
+        margin-bottom: 7px;
+    }
+
+    .insight-footer-note {
+        margin-top: 12px;
+    }
+}
+
+/* =========================================================
+   10. TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .insight-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+/* =========================================================
+   11. MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .insight-page {
+        padding: 13px;
+    }
+
+    .insight-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .insight-heading h1 {
+        font-size: 24px;
+    }
+
+    .insight-hero {
+        min-height: 130px;
+        padding: 17px;
+    }
+
+    .insight-hero h2 {
+        font-size: 18px;
+    }
+
+    .insight-hero-decoration {
+        right: 12px;
+        width: 55px;
+        height: 55px;
+        font-size: 24px;
+        opacity: 0.5;
+    }
+
+    .insight-hero-content {
+        max-width: 85%;
+    }
+
+    .insight-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .insight-card {
+        min-height: 130px;
+        padding: 10px;
+    }
+
+    .insight-value {
+        font-size: 17px;
+    }
+
+    .insight-section-title h2 {
+        font-size: 14px;
+    }
+
+    .recommendation-card {
+        padding: 11px;
+    }
+
+}
+
+/* =========================================================
+   END — DATAPULSE INSIGHTAI
+========================================================= */

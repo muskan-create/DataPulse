@@ -1,0 +1,631 @@
+{% extends "base.html" %}
+
+{% block title %}Analytics | DataPulse{% endblock %}
+{% block body_class %}app-body analytics-body{% endblock %}
+{% block page_name %}Analytics{% endblock %}
+
+
+<!-- =========================================
+     ANALYTICS CSS
+========================================= -->
+
+{% block extra_css %}
+
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/analytics.css') }}"
+>
+
+{% endblock %}
+
+
+<!-- =========================================
+     ANALYTICS CONTENT
+========================================= -->
+
+{% block content %}
+
+<section class="analytics-page">
+
+    <!-- =====================================
+         01. PAGE HEADER
+    ====================================== -->
+
+    <div class="analytics-header">
+
+        <div class="analytics-heading">
+
+            <span class="analytics-eyebrow">
+                DATA INTELLIGENCE / ANALYTICS
+            </span>
+
+            <h1>
+                Advanced <span>Analytics</span>
+            </h1>
+
+            <p>
+                Explore statistical patterns and understand your dataset.
+            </p>
+
+        </div>
+
+
+        <div class="analytics-live">
+
+            <span class="live-dot"></span>
+
+            ANALYSIS ACTIVE
+
+        </div>
+
+    </div>
+
+
+    {% if analysis %}
+
+    <!-- =====================================
+         02. DATASET OVERVIEW
+    ====================================== -->
+
+    <div class="analytics-section-heading">
+
+        <div>
+            <span class="section-number">01 / OVERVIEW</span>
+            <h2>Dataset Overview</h2>
+        </div>
+
+        <span class="section-description">
+            CURRENT DATASET STATISTICS
+        </span>
+
+    </div>
+
+
+    <div class="analytics-overview-grid">
+
+        <!-- TOTAL ROWS -->
+
+        <article class="overview-card">
+
+            <div class="overview-icon blue-icon">
+                <i class="fa-solid fa-table-rows"></i>
+            </div>
+
+            <div>
+                <span class="overview-label">Total Rows</span>
+
+                <h3>
+                    {{ "{:,}".format(analysis.overview.total_rows) }}
+                </h3>
+            </div>
+
+        </article>
+
+
+        <!-- TOTAL COLUMNS -->
+
+        <article class="overview-card">
+
+            <div class="overview-icon purple-icon">
+                <i class="fa-solid fa-table-columns"></i>
+            </div>
+
+            <div>
+                <span class="overview-label">Total Columns</span>
+
+                <h3>
+                    {{ "{:,}".format(analysis.overview.total_columns) }}
+                </h3>
+            </div>
+
+        </article>
+
+
+        <!-- MISSING VALUES -->
+
+        <article class="overview-card">
+
+            <div class="overview-icon orange-icon">
+                <i class="fa-solid fa-circle-exclamation"></i>
+            </div>
+
+            <div>
+                <span class="overview-label">Missing Values</span>
+
+                <h3>
+                    {{ "{:,}".format(analysis.overview.missing_values) }}
+                </h3>
+            </div>
+
+        </article>
+
+
+        <!-- DUPLICATES -->
+
+        <article class="overview-card">
+
+            <div class="overview-icon red-icon">
+                <i class="fa-solid fa-copy"></i>
+            </div>
+
+            <div>
+                <span class="overview-label">Duplicate Rows</span>
+
+                <h3>
+                    {{ "{:,}".format(analysis.overview.duplicate_rows) }}
+                </h3>
+            </div>
+
+        </article>
+
+
+        <!-- MEMORY -->
+
+        <article class="overview-card">
+
+            <div class="overview-icon green-icon">
+                <i class="fa-solid fa-database"></i>
+            </div>
+
+            <div>
+                <span class="overview-label">Memory Usage</span>
+
+                <h3>
+                    {{ analysis.overview.memory_usage }}
+                    <small>KB</small>
+                </h3>
+            </div>
+
+        </article>
+
+    </div>
+
+
+    <!-- =====================================
+         03. STATISTICAL ANALYSIS
+    ====================================== -->
+
+    <div class="analytics-section-heading">
+
+        <div>
+            <span class="section-number">02 / STATISTICS</span>
+            <h2>Statistical Analysis</h2>
+        </div>
+
+        <span class="section-description">
+            NUMERICAL AND CATEGORICAL DATA
+        </span>
+
+    </div>
+
+
+    <div class="analytics-analysis-grid">
+
+
+        <!-- NUMERICAL ANALYSIS -->
+
+        <article class="analysis-panel">
+
+            <div class="panel-heading">
+
+                <div class="panel-title-icon numerical-icon">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+
+                <div>
+                    <h3>Numerical Analysis</h3>
+                    <p>Statistical summary of numerical columns</p>
+                </div>
+
+                <span class="panel-count">
+                    {{ analysis.numerical|length }} COLUMNS
+                </span>
+
+            </div>
+
+
+            {% if analysis.numerical %}
+
+            <div class="analysis-list">
+
+                {% for column, values in analysis.numerical.items() %}
+
+                <div class="column-analysis-card">
+
+                    <div class="column-analysis-header">
+
+                        <h4>{{ column }}</h4>
+
+                        <span class="column-type numerical-type">
+                            NUMERICAL
+                        </span>
+
+                    </div>
+
+
+                    <div class="statistics-grid">
+
+                        <div class="statistic-item">
+                            <span>Mean</span>
+                            <strong>
+                                {{ values.mean if values.mean is not none else "—" }}
+                            </strong>
+                        </div>
+
+                        <div class="statistic-item">
+                            <span>Median</span>
+                            <strong>
+                                {{ values.median if values.median is not none else "—" }}
+                            </strong>
+                        </div>
+
+                        <div class="statistic-item">
+                            <span>Minimum</span>
+                            <strong>
+                                {{ values.minimum if values.minimum is not none else "—" }}
+                            </strong>
+                        </div>
+
+                        <div class="statistic-item">
+                            <span>Maximum</span>
+                            <strong>
+                                {{ values.maximum if values.maximum is not none else "—" }}
+                            </strong>
+                        </div>
+
+                        <div class="statistic-item">
+                            <span>Std. Deviation</span>
+                            <strong>
+                                {{ values.std if values.std is not none else "—" }}
+                            </strong>
+                        </div>
+
+                        <div class="statistic-item">
+                            <span>Sum</span>
+                            <strong>
+                                {{ values.sum if values.sum is not none else "—" }}
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            {% else %}
+
+            <div class="panel-empty">
+                <i class="fa-solid fa-chart-line"></i>
+                <p>No numerical columns found.</p>
+            </div>
+
+            {% endif %}
+
+        </article>
+
+
+        <!-- CATEGORICAL ANALYSIS -->
+
+        <article class="analysis-panel">
+
+            <div class="panel-heading">
+
+                <div class="panel-title-icon categorical-icon">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+
+                <div>
+                    <h3>Categorical Analysis</h3>
+                    <p>Category distribution and frequency</p>
+                </div>
+
+                <span class="panel-count">
+                    {{ analysis.categorical|length }} COLUMNS
+                </span>
+
+            </div>
+
+
+            {% if analysis.categorical %}
+
+            <div class="analysis-list">
+
+                {% for column, values in analysis.categorical.items() %}
+
+                <div class="column-analysis-card">
+
+                    <div class="column-analysis-header">
+
+                        <h4>{{ column }}</h4>
+
+                        <span class="column-type categorical-type">
+                            CATEGORICAL
+                        </span>
+
+                    </div>
+
+
+                    <div class="categorical-details">
+
+                        <div class="category-detail">
+
+                            <span>Unique Values</span>
+
+                            <strong>
+                                {{ "{:,}".format(values.unique) }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="category-detail">
+
+                            <span>Most Frequent Value</span>
+
+                            <strong class="top-value">
+                                {{ values.top_value }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="category-detail">
+
+                            <span>Missing Values</span>
+
+                            <strong>
+                                {{ values.missing }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="category-detail">
+
+                            <span>Available Records</span>
+
+                            <strong>
+                                {{ values.total_values }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            {% else %}
+
+            <div class="panel-empty">
+                <i class="fa-solid fa-layer-group"></i>
+                <p>No categorical columns found.</p>
+            </div>
+
+            {% endif %}
+
+        </article>
+
+    </div>
+
+
+    <!-- =====================================
+         04. COLUMN DETAILS
+    ====================================== -->
+
+    <div class="analytics-section-heading">
+
+        <div>
+            <span class="section-number">03 / DATA STRUCTURE</span>
+            <h2>Column Details</h2>
+        </div>
+
+        <span class="section-description">
+            COMPLETE COLUMN INFORMATION
+        </span>
+
+    </div>
+
+
+    <article class="column-table-panel">
+
+        <div class="table-heading">
+
+            <div>
+                <h3>Column Information</h3>
+                <p>Data types, missing records and unique values</p>
+            </div>
+
+            <span class="table-count">
+                {{ analysis.columns|length }} TOTAL COLUMNS
+            </span>
+
+        </div>
+
+
+        <div class="analytics-table-wrapper">
+
+            <table class="analytics-table">
+
+                <thead>
+
+                    <tr>
+                        <th>Column Name</th>
+                        <th>Data Type</th>
+                        <th>Unique Values</th>
+                        <th>Missing Values</th>
+                        <th>Available Records</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for column, details in analysis.columns.items() %}
+
+                    <tr>
+
+                        <td class="table-column-name">
+                            {{ column }}
+                        </td>
+
+                        <td>
+                            <span class="datatype-badge">
+                                {{ details.data_type }}
+                            </span>
+                        </td>
+
+                        <td>
+                            {{ "{:,}".format(details.unique_values) }}
+                        </td>
+
+                        <td>
+
+                            <span class="
+                                missing-badge
+                                {% if details.missing_values > 0 %}
+                                    has-missing
+                                {% else %}
+                                    no-missing
+                                {% endif %}
+                            ">
+
+                                {{ details.missing_values }}
+
+                            </span>
+
+                        </td>
+
+                        <td>
+                            {{ "{:,}".format(details.non_null_values) }}
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </article>
+
+
+    <!-- =====================================
+         05. MISSING VALUE SUMMARY
+    ====================================== -->
+
+    <div class="analytics-section-heading">
+
+        <div>
+            <span class="section-number">04 / DATA QUALITY</span>
+            <h2>Missing Value Summary</h2>
+        </div>
+
+        <span class="section-description">
+            COLUMN-WISE MISSING RECORDS
+        </span>
+
+    </div>
+
+
+    <article class="missing-panel">
+
+        {% for column, count in analysis.missing_by_column.items() %}
+
+        <div class="missing-row">
+
+            <div class="missing-column-name">
+                {{ column }}
+            </div>
+
+            <div class="missing-progress-track">
+
+                <div
+                    class="missing-progress-fill"
+                    data-missing="{{ count }}"
+                    data-total="{{ analysis.overview.total_rows }}"
+                ></div>
+
+            </div>
+
+            <span class="missing-count">
+                {{ count }} / {{ analysis.overview.total_rows }}
+            </span>
+
+        </div>
+
+        {% endfor %}
+
+        {% if analysis.overview.missing_values == 0 %}
+
+        <div class="quality-success">
+            <i class="fa-solid fa-circle-check"></i>
+            No missing values found in your dataset.
+        </div>
+
+        {% endif %}
+
+    </article>
+
+
+    {% else %}
+
+
+    <!-- =====================================
+         06. EMPTY DATASET STATE
+    ====================================== -->
+
+    <div class="analytics-empty">
+
+        <div class="empty-icon">
+            <i class="fa-solid fa-chart-line"></i>
+        </div>
+
+        <span class="analytics-eyebrow">
+            ANALYTICS WORKSPACE
+        </span>
+
+        <h2>Your analytics workspace is ready.</h2>
+
+        <p>
+            Upload a CSV or Excel dataset to generate statistical
+            summaries, explore column details and discover
+            useful patterns in your data.
+        </p>
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="analytics-primary-btn"
+        >
+            Go to Dashboard
+            <i class="fa-solid fa-arrow-right"></i>
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}
+
+
+<!-- =========================================
+     ANALYTICS JAVASCRIPT
+========================================= -->
+
+{% block extra_js %}
+
+<script src="{{ url_for('static', filename='js/analytics.js') }}"></script>
+
+{% endblock %}

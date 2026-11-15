@@ -1,0 +1,397 @@
+{% extends "base.html" %}
+
+{% block title %}Compare Data | DataPulse{% endblock %}
+{% block page_name %}DATASET COMPARISON{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/comparison.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="comparison-page">
+
+    <!-- HERO -->
+    <div class="comparison-hero">
+
+        <div>
+            <span class="comparison-badge">✦ DATA INTELLIGENCE</span>
+
+            <h1>Compare your <span>Data.</span></h1>
+
+            <p>
+                Discover patterns, identify differences and compare
+                the performance of two datasets.
+            </p>
+        </div>
+
+        <div class="comparison-hero-icon">⇄</div>
+
+    </div>
+
+
+    <!-- FLASH MESSAGES -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="comparison-messages">
+                {% for message in messages %}
+                    <div class="comparison-alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+
+    <!-- UPLOAD SECTION -->
+    <div class="comparison-upload-card">
+
+        <div class="section-heading">
+            <div>
+                <span class="section-label">UPLOAD WORKSPACE</span>
+                <h2>Select datasets</h2>
+                <p>Choose two CSV or Excel files to begin comparison.</p>
+            </div>
+
+            <span class="upload-status">● READY</span>
+        </div>
+
+        <form
+            method="POST"
+            enctype="multipart/form-data"
+            id="comparison-form"
+        >
+
+            <div class="comparison-inputs">
+
+                <div class="comparison-file-card">
+
+                    <div class="file-number">01</div>
+
+                    <div class="file-icon">▤</div>
+
+                    <h3>Dataset One</h3>
+
+                    <p>Upload your first dataset.</p>
+
+                    <label for="dataset1" class="file-select">
+                        Choose CSV / Excel
+                    </label>
+
+                    <input
+                        type="file"
+                        id="dataset1"
+                        name="dataset1"
+                        accept=".csv,.xlsx,.xls"
+                        required
+                    >
+
+                    <div class="selected-file" id="file-name-1">
+                        No file selected
+                    </div>
+
+                </div>
+
+
+                <div class="comparison-vs">VS</div>
+
+
+                <div class="comparison-file-card">
+
+                    <div class="file-number">02</div>
+
+                    <div class="file-icon">▤</div>
+
+                    <h3>Dataset Two</h3>
+
+                    <p>Upload your second dataset.</p>
+
+                    <label for="dataset2" class="file-select">
+                        Choose CSV / Excel
+                    </label>
+
+                    <input
+                        type="file"
+                        id="dataset2"
+                        name="dataset2"
+                        accept=".csv,.xlsx,.xls"
+                        required
+                    >
+
+                    <div class="selected-file" id="file-name-2">
+                        No file selected
+                    </div>
+
+                </div>
+
+            </div>
+
+            <button
+                type="submit"
+                class="compare-button"
+                id="compare-button"
+            >
+                <span>Compare Datasets</span>
+                <span>→</span>
+            </button>
+
+        </form>
+
+    </div>
+
+
+    {% if comparison %}
+
+    <!-- RESULTS -->
+    <div class="comparison-results">
+
+        <div class="results-heading">
+            <div>
+                <span class="section-label">ANALYSIS COMPLETE</span>
+                <h2>Comparison Overview</h2>
+                <p>Here is what we discovered across your datasets.</p>
+            </div>
+
+            <span class="result-status">✓ COMPLETED</span>
+        </div>
+
+
+        <!-- STATISTICS -->
+        <div class="comparison-stats">
+
+            <div class="comparison-stat-card">
+                <span class="stat-icon">▤</span>
+                <p>Dataset 1 Rows</p>
+                <h3>{{ comparison.dataset1_rows }}</h3>
+            </div>
+
+            <div class="comparison-stat-card">
+                <span class="stat-icon">▤</span>
+                <p>Dataset 2 Rows</p>
+                <h3>{{ comparison.dataset2_rows }}</h3>
+            </div>
+
+            <div class="comparison-stat-card">
+                <span class="stat-icon">▦</span>
+                <p>Dataset 1 Columns</p>
+                <h3>{{ comparison.dataset1_columns }}</h3>
+            </div>
+
+            <div class="comparison-stat-card">
+                <span class="stat-icon">▦</span>
+                <p>Dataset 2 Columns</p>
+                <h3>{{ comparison.dataset2_columns }}</h3>
+            </div>
+
+            <div class="comparison-stat-card">
+                <span class="stat-icon">!</span>
+                <p>Dataset 1 Missing</p>
+                <h3>{{ comparison.dataset1_missing }}</h3>
+            </div>
+
+            <div class="comparison-stat-card">
+                <span class="stat-icon">!</span>
+                <p>Dataset 2 Missing</p>
+                <h3>{{ comparison.dataset2_missing }}</h3>
+            </div>
+
+        </div>
+
+
+        <!-- COLUMN COMPARISON -->
+        <div class="column-comparison-section">
+
+            <div class="section-heading">
+                <div>
+                    <span class="section-label">STRUCTURE ANALYSIS</span>
+                    <h2>Column Comparison</h2>
+                </div>
+            </div>
+
+            <div class="comparison-columns">
+
+                <div class="comparison-detail-card">
+
+                    <div class="detail-card-heading">
+                        <span class="detail-dot green"></span>
+                        <h3>Common Columns</h3>
+                    </div>
+
+                    <div class="column-tags">
+
+                        {% for column in comparison.common_columns %}
+                            <span class="column-tag">{{ column }}</span>
+                        {% else %}
+                            <p>No common columns found.</p>
+                        {% endfor %}
+
+                    </div>
+
+                    <span class="detail-count">
+                        {{ comparison.common_columns|length }} columns
+                    </span>
+
+                </div>
+
+
+                <div class="comparison-detail-card">
+
+                    <div class="detail-card-heading">
+                        <span class="detail-dot blue"></span>
+                        <h3>Only in Dataset 1</h3>
+                    </div>
+
+                    <div class="column-tags">
+
+                        {% for column in comparison.only_dataset1 %}
+                            <span class="column-tag">{{ column }}</span>
+                        {% else %}
+                            <p>No additional columns.</p>
+                        {% endfor %}
+
+                    </div>
+
+                    <span class="detail-count">
+                        {{ comparison.only_dataset1|length }} columns
+                    </span>
+
+                </div>
+
+
+                <div class="comparison-detail-card">
+
+                    <div class="detail-card-heading">
+                        <span class="detail-dot purple"></span>
+                        <h3>Only in Dataset 2</h3>
+                    </div>
+
+                    <div class="column-tags">
+
+                        {% for column in comparison.only_dataset2 %}
+                            <span class="column-tag">{{ column }}</span>
+                        {% else %}
+                            <p>No additional columns.</p>
+                        {% endfor %}
+
+                    </div>
+
+                    <span class="detail-count">
+                        {{ comparison.only_dataset2|length }} columns
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- NUMERICAL COMPARISON -->
+        <div class="numerical-section">
+
+            <div class="section-heading">
+                <div>
+                    <span class="section-label">PERFORMANCE ANALYSIS</span>
+                    <h2>Numerical Comparison</h2>
+                    <p>Compare average values of common numerical columns.</p>
+                </div>
+            </div>
+
+
+            {% if comparison.numerical_comparison %}
+
+            <div class="comparison-table-wrapper">
+
+                <table class="comparison-table">
+
+                    <thead>
+                        <tr>
+                            <th>Column</th>
+                            <th>Dataset 1 Average</th>
+                            <th>Dataset 2 Average</th>
+                            <th>Difference</th>
+                            <th>Change %</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for column, values in comparison.numerical_comparison.items() %}
+
+                        <tr>
+
+                            <td class="table-column-name">
+                                {{ column }}
+                            </td>
+
+                            <td>
+                                {{ "{:,.2f}".format(values.dataset1_mean) }}
+                            </td>
+
+                            <td>
+                                {{ "{:,.2f}".format(values.dataset2_mean) }}
+                            </td>
+
+                            <td class="{% if values.difference > 0 %}positive-value{% elif values.difference < 0 %}negative-value{% endif %}">
+                                {{ "{:,.2f}".format(values.difference) }}
+                            </td>
+
+                            <td>
+
+                                {% if values.percentage_change is not none %}
+
+                                    <span class="change-badge {% if values.percentage_change > 0 %}positive{% elif values.percentage_change < 0 %}negative{% else %}neutral{% endif %}">
+                                        {% if values.percentage_change > 0 %}+{% endif %}
+                                        {{ values.percentage_change }}%
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="change-badge neutral">
+                                        N/A
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <div class="empty-comparison">
+                <div>∅</div>
+                <h3>No Numerical Data Found</h3>
+                <p>
+                    There are no common numerical columns available
+                    for comparison between these datasets.
+                </p>
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+<script src="{{ url_for('static', filename='js/comparison.js') }}"></script>
+
+{% endblock %}

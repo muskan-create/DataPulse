@@ -1,0 +1,409 @@
+{% extends "base.html" %}
+
+{% block title %}InsightAI | DataPulse{% endblock %}
+{% block page_name %}InsightAI{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/insights.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="insight-page">
+
+    <!-- PAGE HEADER -->
+    <div class="insight-heading">
+
+        <div class="insight-heading-content">
+
+            <div class="insight-eyebrow">
+                WORKSPACE / ARTIFICIAL INTELLIGENCE
+            </div>
+
+            <h1>
+                Insight<span>AI.</span>
+            </h1>
+
+            <p>
+                Discover patterns, understand performance and make smarter decisions.
+            </p>
+
+        </div>
+
+        <div class="insight-status">
+            <span class="status-dot"></span>
+            INTELLIGENCE ENGINE ACTIVE
+        </div>
+
+    </div>
+
+
+    <!-- HERO SECTION -->
+    <div class="insight-hero">
+
+        <div class="insight-hero-content">
+
+            <div class="insight-hero-label">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                DATAPULSE / AI INSIGHTS
+            </div>
+
+            <h2>
+                Your data has a story.<br>
+                <span>Let's discover it.</span>
+            </h2>
+
+            <p>
+                InsightAI analyses your uploaded dataset and transforms
+                its patterns into understandable findings and practical
+                business recommendations.
+            </p>
+
+        </div>
+
+        <div class="insight-hero-decoration">
+            <i class="fa-solid fa-brain"></i>
+        </div>
+
+        <div class="insight-hero-bottom">
+            <span>
+                <i class="fa-solid fa-chart-simple"></i>
+                DATA-DRIVEN ANALYSIS
+            </span>
+
+            <span>
+                <i class="fa-solid fa-lightbulb"></i>
+                SMART DECISIONS
+            </span>
+        </div>
+
+    </div>
+
+
+    <!-- REUSABLE CONTENT MACRO -->
+    {% macro render_content(value) %}
+
+        {% if value is mapping %}
+
+            <ul class="insight-nested-list">
+
+                {% for key, item in value.items() %}
+
+                    <li>
+                        <strong>
+                            {{ key|replace('_',' ')|title }}:
+                        </strong>
+
+                        {{ render_content(item) }}
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+        {% elif value is sequence and value is not string %}
+
+            <ul class="insight-nested-list">
+
+                {% for item in value %}
+
+                    <li>{{ render_content(item) }}</li>
+
+                {% endfor %}
+
+            </ul>
+
+        {% elif value is none %}
+
+            —
+
+        {% else %}
+
+            {{ value }}
+
+        {% endif %}
+
+    {% endmacro %}
+
+
+    <!-- GENERATED INSIGHTS -->
+    <div class="insight-section">
+
+        <div class="insight-section-head">
+
+            <div class="insight-section-title">
+
+                <div class="section-icon">
+                    <i class="fa-solid fa-lightbulb"></i>
+                </div>
+
+                <div>
+                    <h2>Generated Insights</h2>
+                    <p>Understand what your dataset reveals.</p>
+                </div>
+
+            </div>
+
+            <span class="section-label">
+                DATA-DRIVEN FINDINGS
+            </span>
+
+        </div>
+
+
+        {% if insights %}
+
+            <div class="insight-grid">
+
+                {% if insights is mapping %}
+
+                    {% for key, value in insights.items() %}
+
+                        <article class="insight-card">
+
+                            <div class="insight-card-top">
+
+                                <div class="insight-icon">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                </div>
+
+                                <span class="insight-number">
+                                    {{ "%02d"|format(loop.index) }}
+                                </span>
+
+                            </div>
+
+                            <h3>
+                                {{ key|replace('_',' ')|title }}
+                            </h3>
+
+                            <div class="insight-card-content">
+                                {{ render_content(value) }}
+                            </div>
+
+                        </article>
+
+                    {% endfor %}
+
+                {% elif insights is sequence and insights is not string %}
+
+                    {% for item in insights %}
+
+                        <article class="insight-card">
+
+                            <div class="insight-card-top">
+
+                                <div class="insight-icon">
+                                    <i class="fa-solid fa-lightbulb"></i>
+                                </div>
+
+                                <span class="insight-number">
+                                    {{ "%02d"|format(loop.index) }}
+                                </span>
+
+                            </div>
+
+                            {% if item is mapping %}
+
+                                <h3>
+                                    {{ item.get('title', 'Insight ' ~ loop.index) }}
+                                </h3>
+
+                                {% if item.get('value') is not none %}
+                                    <div class="insight-value">
+                                        {{ item.get('value') }}
+                                    </div>
+                                {% endif %}
+
+                                {% if item.get('description') %}
+                                    <p class="insight-card-description">
+                                        {{ item.get('description') }}
+                                    </p>
+                                {% endif %}
+
+                            {% else %}
+
+                                <h3>Insight {{ loop.index }}</h3>
+
+                                <div class="insight-card-content">
+                                    {{ render_content(item) }}
+                                </div>
+
+                            {% endif %}
+
+                        </article>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <article class="insight-card">
+                        <div class="insight-card-content">
+                            {{ render_content(insights) }}
+                        </div>
+                    </article>
+
+                {% endif %}
+
+            </div>
+
+        {% else %}
+
+            <div class="insight-empty">
+
+                <div class="empty-icon">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+
+                <h3>No insights available</h3>
+
+                <p>
+                    InsightAI needs a dataset to discover patterns
+                    and generate meaningful findings.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- SMART RECOMMENDATIONS -->
+    <div class="insight-section recommendation-section">
+
+        <div class="insight-section-head">
+
+            <div class="insight-section-title">
+
+                <div class="section-icon recommendation-icon">
+                    <i class="fa-solid fa-bullseye"></i>
+                </div>
+
+                <div>
+                    <h2>Smart Recommendations</h2>
+                    <p>Suggestions based on your actual dataset.</p>
+                </div>
+
+            </div>
+
+            <span class="section-label">
+                ACTIONABLE SUGGESTIONS
+            </span>
+
+        </div>
+
+
+        {% if recommendations %}
+
+            <div class="insight-grid">
+
+                {% if recommendations is mapping %}
+
+                    {% for key, value in recommendations.items() %}
+
+                        <article class="insight-card recommendation-card">
+
+                            <div class="insight-card-top">
+
+                                <div class="insight-icon recommendation-icon">
+                                    <i class="fa-solid fa-arrow-trend-up"></i>
+                                </div>
+
+                                <span class="insight-number">
+                                    {{ "%02d"|format(loop.index) }}
+                                </span>
+
+                            </div>
+
+                            <h3>
+                                {{ key|replace('_',' ')|title }}
+                            </h3>
+
+                            <div class="insight-card-content">
+                                {{ render_content(value) }}
+                            </div>
+
+                        </article>
+
+                    {% endfor %}
+
+                {% elif recommendations is sequence and recommendations is not string %}
+
+                    {% for item in recommendations %}
+
+                        <article class="insight-card recommendation-card">
+
+                            <div class="insight-card-top">
+
+                                <div class="insight-icon recommendation-icon">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+
+                                <span class="insight-number">
+                                    {{ "%02d"|format(loop.index) }}
+                                </span>
+
+                            </div>
+
+                            <h3>Recommendation {{ loop.index }}</h3>
+
+                            <div class="insight-card-content">
+                                {{ render_content(item) }}
+                            </div>
+
+                        </article>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <article class="insight-card recommendation-card">
+
+                        <div class="insight-card-content">
+                            {{ render_content(recommendations) }}
+                        </div>
+
+                    </article>
+
+                {% endif %}
+
+            </div>
+
+        {% else %}
+
+            <div class="insight-empty">
+
+                <div class="empty-icon">
+                    <i class="fa-solid fa-compass"></i>
+                </div>
+
+                <h3>No recommendations available</h3>
+
+                <p>
+                    Upload a dataset to receive practical
+                    suggestions based on its values.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- PAGE FOOTNOTE -->
+    <div class="insight-footer-note">
+
+        <i class="fa-solid fa-circle-info"></i>
+
+        <span>
+            Insights and recommendations are generated using
+            the currently selected dataset.
+        </span>
+
+    </div>
+
+</section>
+
+{% endblock %}

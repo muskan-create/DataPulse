@@ -1,0 +1,517 @@
+{% extends "base.html" %}
+
+{% block title %}Data Cleaning Studio | DataPulse{% endblock %}
+{% block page_name %}Data Cleaning{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/cleaning.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="cleaning-page">
+
+    <!-- PAGE HEADER -->
+    <header class="cleaning-header">
+
+        <div>
+            <div class="cleaning-eyebrow">
+                WORKSPACE / DATA MANAGEMENT
+            </div>
+
+            <h1>Data Cleaning <span>Studio.</span></h1>
+
+            <p>
+                Improve data quality, fix inconsistencies and prepare
+                your dataset for reliable analysis.
+            </p>
+        </div>
+
+        <div class="cleaning-status">
+            <span class="status-dot"></span>
+            CLEANING ENGINE ACTIVE
+        </div>
+
+    </header>
+
+
+    <!-- DATASET OVERVIEW -->
+    <section class="cleaning-overview">
+
+        <div class="cleaning-section-heading">
+            <div>
+                <span class="section-eyebrow">01 / DATASET HEALTH</span>
+                <h2>Cleaning Overview</h2>
+                <p>Current dataset quality and statistics.</p>
+            </div>
+        </div>
+
+        <div class="cleaning-stats-grid">
+
+            <article class="cleaning-stat-card">
+                <span>Total Rows</span>
+                <h3>{{ total_rows|default(0) }}</h3>
+                <small>Dataset records</small>
+            </article>
+
+            <article class="cleaning-stat-card">
+                <span>Total Columns</span>
+                <h3>{{ total_columns|default(0) }}</h3>
+                <small>Available fields</small>
+            </article>
+
+            <article class="cleaning-stat-card">
+                <span>Missing Values</span>
+                <h3>{{ missing_values|default(0) }}</h3>
+                <small>Empty cells detected</small>
+            </article>
+
+            <article class="cleaning-stat-card">
+                <span>Duplicate Rows</span>
+                <h3>{{ duplicate_rows|default(0) }}</h3>
+                <small>Repeated records</small>
+            </article>
+
+            <article class="cleaning-stat-card">
+                <span>Data Quality</span>
+                <h3>{{ quality_score|default(0) }}%</h3>
+                <small>Current quality score</small>
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- CLEANING OPERATIONS -->
+    <section class="cleaning-operations">
+
+        <div class="cleaning-section-heading">
+            <div>
+                <span class="section-eyebrow">02 / CLEANING TOOLS</span>
+                <h2>Data Cleaning Operations</h2>
+                <p>Select an operation to improve your dataset.</p>
+            </div>
+        </div>
+
+
+        <div class="cleaning-tools-grid">
+
+            <!-- MISSING VALUES -->
+            <article class="cleaning-tool-card">
+
+                <div class="tool-card-icon">
+                    <i class="fa-solid fa-table-cells"></i>
+                </div>
+
+                <span class="tool-number">01</span>
+
+                <h3>Missing Values</h3>
+
+                <p>
+                    Identify and handle empty cells in your dataset.
+                </p>
+
+                <form action="/cleaning/handle-missing" method="POST">
+
+                    <label for="missing-method">Handling Method</label>
+
+                    <select name="method" id="missing-method">
+                        <option value="drop">Remove Missing Rows</option>
+                        <option value="mean">Fill with Mean</option>
+                        <option value="median">Fill with Median</option>
+                        <option value="mode">Fill with Mode</option>
+                        <option value="zero">Fill with Zero</option>
+                    </select>
+
+                    <button type="submit" class="cleaning-action-btn">
+                        Apply Operation
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                </form>
+
+            </article>
+
+
+            <!-- DUPLICATES -->
+            <article class="cleaning-tool-card">
+
+                <div class="tool-card-icon">
+                    <i class="fa-solid fa-clone"></i>
+                </div>
+
+                <span class="tool-number">02</span>
+
+                <h3>Duplicate Records</h3>
+
+                <p>
+                    Detect repeated records and remove duplicate rows.
+                </p>
+
+                <form action="/cleaning/remove-duplicates" method="POST">
+
+                    <button type="submit" class="cleaning-action-btn">
+                        Remove Duplicates
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                </form>
+
+            </article>
+
+
+            <!-- DATA TYPES -->
+            <article class="cleaning-tool-card">
+
+                <div class="tool-card-icon">
+                    <i class="fa-solid fa-code"></i>
+                </div>
+
+                <span class="tool-number">03</span>
+
+                <h3>Data Type Correction</h3>
+
+                <p>
+                    Convert column values into appropriate data types.
+                </p>
+
+                <form action="/cleaning/convert-type" method="POST">
+
+                    <label for="type-column">Select Column</label>
+
+                    <select name="column" id="type-column">
+                        {% for column in columns|default([]) %}
+                        <option value="{{ column }}">{{ column }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <label for="target-type">Target Data Type</label>
+
+                    <select name="target_type" id="target-type">
+                        <option value="numeric">Numeric</option>
+                        <option value="text">Text</option>
+                        <option value="datetime">Date / Time</option>
+                        <option value="integer">Integer</option>
+                    </select>
+
+                    <button type="submit" class="cleaning-action-btn">
+                        Convert Data Type
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                </form>
+
+            </article>
+
+
+            <!-- EMPTY ROWS -->
+            <article class="cleaning-tool-card">
+
+                <div class="tool-card-icon">
+                    <i class="fa-solid fa-filter-circle-xmark"></i>
+                </div>
+
+                <span class="tool-number">04</span>
+
+                <h3>Empty Rows</h3>
+
+                <p>
+                    Remove records that contain no useful data.
+                </p>
+
+                <form action="/cleaning/remove-empty-rows" method="POST">
+
+                    <button type="submit" class="cleaning-action-btn">
+                        Remove Empty Rows
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                </form>
+
+            </article>
+
+
+            <!-- REMOVE COLUMN -->
+            <article class="cleaning-tool-card">
+
+                <div class="tool-card-icon">
+                    <i class="fa-solid fa-table-columns"></i>
+                </div>
+
+                <span class="tool-number">05</span>
+
+                <h3>Remove Columns</h3>
+
+                <p>
+                    Remove unnecessary columns from your dataset.
+                </p>
+
+                <form action="/cleaning/remove-column" method="POST">
+
+                    <label for="remove-column">Select Column</label>
+
+                    <select name="column" id="remove-column">
+                        {% for column in columns|default([]) %}
+                        <option value="{{ column }}">{{ column }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <button type="submit" class="cleaning-action-btn">
+                        Remove Column
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                </form>
+
+            </article>
+
+
+            <!-- RENAME COLUMN -->
+            <article class="cleaning-tool-card">
+
+                <div class="tool-card-icon">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </div>
+
+                <span class="tool-number">06</span>
+
+                <h3>Rename Columns</h3>
+
+                <p>
+                    Give meaningful names to your dataset columns.
+                </p>
+
+                <form action="/cleaning/rename-column" method="POST">
+
+                    <label for="rename-column">Current Column</label>
+
+                    <select name="old_name" id="rename-column">
+                        {% for column in columns|default([]) %}
+                        <option value="{{ column }}">{{ column }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <label for="new-column-name">New Column Name</label>
+
+                    <input
+                        type="text"
+                        name="new_name"
+                        id="new-column-name"
+                        placeholder="Enter new column name"
+                        required
+                    >
+
+                    <button type="submit" class="cleaning-action-btn">
+                        Rename Column
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                </form>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- BEFORE / AFTER PREVIEW -->
+    <section class="cleaning-preview-section">
+
+        <div class="cleaning-section-heading">
+            <div>
+                <span class="section-eyebrow">03 / DATA COMPARISON</span>
+                <h2>Before vs After Cleaning</h2>
+                <p>Compare your original and cleaned dataset.</p>
+            </div>
+        </div>
+
+        <div class="cleaning-preview-grid">
+
+            <div class="preview-card">
+
+                <div class="preview-card-header">
+                    <div>
+                        <span>ORIGINAL DATA</span>
+                        <h3>Before Cleaning</h3>
+                    </div>
+
+                    <i class="fa-solid fa-database"></i>
+                </div>
+
+                <div class="preview-table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                {% for column in columns|default([]) %}
+                                <th>{{ column }}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for row in original_preview|default([]) %}
+                            <tr>
+                                {% for value in row %}
+                                <td>{{ value }}</td>
+                                {% endfor %}
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="100%">
+                                    No original data available.
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+
+            <div class="preview-card">
+
+                <div class="preview-card-header">
+                    <div>
+                        <span>PROCESSED DATA</span>
+                        <h3>After Cleaning</h3>
+                    </div>
+
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+
+                <div class="preview-table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                {% for column in cleaned_columns|default([]) %}
+                                <th>{{ column }}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for row in cleaned_preview|default([]) %}
+                            <tr>
+                                {% for value in row %}
+                                <td>{{ value }}</td>
+                                {% endfor %}
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="100%">
+                                    Apply a cleaning operation to see results.
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CLEANING HISTORY -->
+    <section class="cleaning-history-section">
+
+        <div class="cleaning-section-heading">
+            <div>
+                <span class="section-eyebrow">04 / ACTIVITY LOG</span>
+                <h2>Cleaning History</h2>
+                <p>Track operations performed on your dataset.</p>
+            </div>
+        </div>
+
+        <div class="cleaning-history-card">
+
+            {% for item in cleaning_history|default([]) %}
+
+            <div class="history-item">
+
+                <div class="history-icon">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+
+                <div>
+                    <h4>{{ item.operation }}</h4>
+                    <p>{{ item.details }}</p>
+                </div>
+
+                <span class="history-time">
+                    {{ item.time }}
+                </span>
+
+            </div>
+
+            {% else %}
+
+            <div class="history-empty">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                <p>No cleaning operations performed yet.</p>
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+
+    <!-- FINAL ACTIONS -->
+    <section class="cleaning-final-actions">
+
+        <div>
+            <span class="section-eyebrow">05 / EXPORT DATA</span>
+            <h2>Your cleaned dataset is ready?</h2>
+            <p>Download the processed dataset or restore the original data.</p>
+        </div>
+
+        <div class="cleaning-buttons">
+
+            <a href="/cleaning/download/csv" class="download-btn">
+                <i class="fa-solid fa-file-csv"></i>
+                Download CSV
+            </a>
+
+            <a href="/cleaning/download/excel" class="download-btn">
+                <i class="fa-solid fa-file-excel"></i>
+                Download Excel
+            </a>
+
+            <form action="/cleaning/reset" method="POST"
+                  onsubmit="return confirm('Restore the original dataset? All cleaning changes will be lost.');">
+
+                <button type="submit" class="reset-btn">
+                    <i class="fa-solid fa-rotate-left"></i>
+                    Reset Dataset
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER NOTE -->
+    <div class="cleaning-footer-note">
+
+        <i class="fa-solid fa-shield-halved"></i>
+
+        <span>
+            Your original uploaded dataset is preserved separately.
+            Cleaning operations are applied to a working copy.
+        </span>
+
+    </div>
+
+</section>
+
+{% endblock %}
