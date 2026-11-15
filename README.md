@@ -1,3 +1,7 @@
+## 🚀 Live Demo
+
+[**Click here to use DataPulse**](https://datapulse-cljv.onrender.com)
+
 # DataPulse – Intelligent Data Analytics Platform
 
 DataPulse is a Python-based data analytics platform that helps users upload, clean, analyze, visualize, and understand their datasets through an interactive web interface.
